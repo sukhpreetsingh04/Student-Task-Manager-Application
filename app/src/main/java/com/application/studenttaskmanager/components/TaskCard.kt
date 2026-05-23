@@ -1,17 +1,12 @@
 package com.application.studenttaskmanager.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import com.application.studenttaskmanager.R
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,9 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun TaskCard(modifier: Modifier = Modifier) {
@@ -44,7 +37,7 @@ fun TaskCard(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_add),
                 contentDescription = "Add Task",
-                tint = Color.White,
+                tint = Color(0xFF5B7C99),
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(10.dp)
