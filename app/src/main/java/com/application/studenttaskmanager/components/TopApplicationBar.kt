@@ -19,6 +19,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.text.font.FontWeight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,8 +51,9 @@ fun TopApplicationBar(
                     Column {
                         Text(
                             text = "Dashboard",
-                            color = Color.White,
-                            fontSize = 24.sp
+                            color = Color(0xFFFFB74D),
+                            fontSize = 26.sp,
+                            fontWeight = FontWeight.ExtraBold
                         )
                     }
                 },
