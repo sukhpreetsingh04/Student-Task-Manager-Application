@@ -37,7 +37,7 @@ fun TaskCard(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_add),
                 contentDescription = "Add Task",
-                tint = Color(0xFF5B7C99),
+                tint = Color(0xFFFFB74D),
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(10.dp)

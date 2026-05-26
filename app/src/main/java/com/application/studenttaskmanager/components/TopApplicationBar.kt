@@ -63,18 +63,20 @@ fun TopApplicationBar(
                         Icon(Icons.Filled.MoreVert, contentDescription = "More icon")
 
                         DropdownMenu(
+                            containerColor =  Color(0xFF1E1E1E),
                             expanded = menuStatus.value,
                             onDismissRequest = { menuStatus.value = false }) {
-                            menuItems.forEach { DropdownMenuItem(text = { Text(text = it) }, onClick = {
+                            menuItems.forEach { DropdownMenuItem(text = { Text(text = it, color = Color(0xFFFFB74D)) }, onClick = {
                                 menuStatus.value = false
                             }) }
                         }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF5B7C99),
-                    navigationIconContentColor = Color.White,
-                    actionIconContentColor = Color.White
+                    containerColor = Color(0xFF1E1E1E),
+                    titleContentColor = Color.White,
+                    actionIconContentColor = Color(0xFFFFB74D),
+                    navigationIconContentColor = Color(0xFFFFB74D)
                 )
             )
         },

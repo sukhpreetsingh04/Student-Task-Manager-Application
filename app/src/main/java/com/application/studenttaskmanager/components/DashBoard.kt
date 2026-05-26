@@ -14,7 +14,7 @@ fun DashBoard(modifier: Modifier = Modifier) {
     TopApplicationBar { paddingValues ->
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(paddingValues).background(color = Color.White)) {
+            .padding(paddingValues).background(color = Color(0xFF121212))) {
             TaskCard()
         }
     }

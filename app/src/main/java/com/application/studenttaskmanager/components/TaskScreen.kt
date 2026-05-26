@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -34,19 +33,33 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: () -> Unit) {
 
     val datePickerState = rememberDatePickerState()
 
+    val taskScreenBackgroundColor = Color(0xFF121212)
+
     val myButtonBackgroundColor = remember {
-        mutableStateOf(Color(0xFF2E4A62))
+        mutableStateOf(Color(0xFFFF9800))
     }
 
     val myButtonTextColor = remember {
-        mutableStateOf((Color(0xFFFFFFFF)))
+        mutableStateOf(Color(0xFF121212))
     }
 
     val myTextFieldColor = TextFieldDefaults.colors(
-        focusedContainerColor = Color(0xFFFFFFFF),
-        unfocusedContainerColor = Color(0xFF5B7C99),
-        focusedTextColor = Color(0xFF2E4A62),
-        unfocusedTextColor = Color(0xFFFFFFFF)
+        focusedContainerColor = Color(0xFF1E1E1E),
+        unfocusedContainerColor = Color(0xFF252525),
+
+        focusedTextColor = Color(0xFFFFFFFF),
+        unfocusedTextColor = Color(0xFFE0E0E0),
+
+        focusedIndicatorColor = Color(0xFFFF9800),
+        unfocusedIndicatorColor = Color(0xFFFFB74D),
+
+        cursorColor = Color(0xFFFF9800),
+
+        focusedLabelColor = Color(0xFFFFB74D),
+        unfocusedLabelColor = Color(0xFFBDBDBD),
+
+        focusedPlaceholderColor = Color(0xFFBDBDBD),
+        unfocusedPlaceholderColor = Color(0xFF8A8A8A)
     )
 
 
@@ -61,7 +74,7 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White, shape = RoundedCornerShape(12.dp))
+            .background(taskScreenBackgroundColor, shape = RoundedCornerShape(12.dp))
             .padding(20.dp)
     ) {
         TextField(
