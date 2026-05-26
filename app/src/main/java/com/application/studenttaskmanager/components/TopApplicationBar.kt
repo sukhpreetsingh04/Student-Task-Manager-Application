@@ -12,10 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,7 +53,7 @@ fun TopApplicationBar(
                     Column {
                         Text(
                             text = "Dashboard",
-                            color = Color(0xFFFFB74D),
+                            color = MaterialTheme.colorScheme.primary,
                             fontSize = 26.sp,
                             fontWeight = FontWeight.ExtraBold
                         )
@@ -59,18 +61,40 @@ fun TopApplicationBar(
                 },
                 actions = {
                     IconButton(onClick = {}) {
-                        Icon(Icons.Filled.Search, contentDescription = "Search icon")
+                        Icon(
+                            Icons.Filled.Menu,
+                            contentDescription = "Menu Icon",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
                     }
-                    IconButton(onClick = {menuStatus.value = true}) {
-                        Icon(Icons.Filled.MoreVert, contentDescription = "More icon")
+                    IconButton(onClick = {}) {
+                        Icon(
+                            Icons.Filled.Search,
+                            contentDescription = "Search icon",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    IconButton(onClick = { menuStatus.value = true }) {
+                        Icon(
+                            Icons.Filled.MoreVert,
+                            contentDescription = "More icon",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
 
                         DropdownMenu(
-                            containerColor =  Color(0xFF1E1E1E),
+                            containerColor = Color(0xFF1E1E1E),
                             expanded = menuStatus.value,
                             onDismissRequest = { menuStatus.value = false }) {
-                            menuItems.forEach { DropdownMenuItem(text = { Text(text = it, color = Color(0xFFFFB74D)) }, onClick = {
-                                menuStatus.value = false
-                            }) }
+                            menuItems.forEach {
+                                DropdownMenuItem(text = {
+                                    Text(
+                                        text = it,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                }, onClick = {
+                                    menuStatus.value = false
+                                })
+                            }
                         }
                     }
                 },

@@ -17,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,33 +32,28 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: () -> Unit) {
 
     val datePickerState = rememberDatePickerState()
 
-    val taskScreenBackgroundColor = Color(0xFF121212)
+    val taskScreenBackgroundColor = MaterialTheme.colorScheme.background
 
-    val myButtonBackgroundColor = remember {
-        mutableStateOf(Color(0xFFFF9800))
-    }
-
-    val myButtonTextColor = remember {
-        mutableStateOf(Color(0xFF121212))
-    }
+    val myButtonBackgroundColor = MaterialTheme.colorScheme.primary
+    val myButtonTextColor = MaterialTheme.colorScheme.onPrimary
 
     val myTextFieldColor = TextFieldDefaults.colors(
-        focusedContainerColor = Color(0xFF1E1E1E),
-        unfocusedContainerColor = Color(0xFF252525),
+        focusedContainerColor = MaterialTheme.colorScheme.surface,
+        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
 
-        focusedTextColor = Color(0xFFFFFFFF),
-        unfocusedTextColor = Color(0xFFE0E0E0),
+        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
 
-        focusedIndicatorColor = Color(0xFFFF9800),
-        unfocusedIndicatorColor = Color(0xFFFFB74D),
+        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
 
-        cursorColor = Color(0xFFFF9800),
+        cursorColor = MaterialTheme.colorScheme.primary,
 
-        focusedLabelColor = Color(0xFFFFB74D),
-        unfocusedLabelColor = Color(0xFFBDBDBD),
+        focusedLabelColor = MaterialTheme.colorScheme.primary,
+        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
 
-        focusedPlaceholderColor = Color(0xFFBDBDBD),
-        unfocusedPlaceholderColor = Color(0xFF8A8A8A)
+        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
     )
 
 
@@ -152,8 +146,8 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: () -> Unit) {
             Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = myButtonBackgroundColor.value,
-                contentColor = myButtonTextColor.value
+                containerColor = myButtonBackgroundColor,
+                contentColor = myButtonTextColor
             ),
         ) { Text("Submit", fontSize = 20.sp, fontWeight = FontWeight.Bold) }
     }
