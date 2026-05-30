@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,16 +25,11 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskScreen(modifier: Modifier = Modifier, onSubmit: () -> Unit) {
+fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
 
     var showDatePicker by remember { mutableStateOf(false) }
 
     val datePickerState = rememberDatePickerState()
-
-    val taskScreenBackgroundColor = MaterialTheme.colorScheme.background
-
-    val myButtonBackgroundColor = MaterialTheme.colorScheme.primary
-    val myButtonTextColor = MaterialTheme.colorScheme.onPrimary
 
     val myTextFieldColor = TextFieldDefaults.colors(
         focusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -67,8 +61,8 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: () -> Unit) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(taskScreenBackgroundColor, shape = RoundedCornerShape(12.dp))
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background, shape = RoundedCornerShape(12.dp))
             .padding(20.dp)
     ) {
         TextField(
@@ -142,12 +136,16 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: () -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { onSubmit() },
+            onClick = {
+                onSubmit("$description - $selectedDate")
+                description = ""
+                selectedDate = ""
+            },
             Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = myButtonBackgroundColor,
-                contentColor = myButtonTextColor
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ),
         ) { Text("Submit", fontSize = 20.sp, fontWeight = FontWeight.Bold) }
     }
