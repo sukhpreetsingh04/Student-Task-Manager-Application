@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -56,7 +57,7 @@ fun DashBoard(
                             text = task,
                             modifier = Modifier.padding(12.dp),
                             fontSize = 16.sp,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color(0xFFFFB74D)
                         )
                     }
                 }

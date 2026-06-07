@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,12 +39,12 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
         focusedTextColor = MaterialTheme.colorScheme.onSurface,
         unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
 
-        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+        focusedIndicatorColor = Color(0xFFFFB74D),
         unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
 
-        cursorColor = MaterialTheme.colorScheme.primary,
+        cursorColor = Color(0xFFFFB74D),
 
-        focusedLabelColor = MaterialTheme.colorScheme.primary,
+        focusedLabelColor = Color(0xFFFFB74D),
         unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
 
         focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -144,7 +145,7 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
             Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = Color(0xFFFFB74D),
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ),
         ) { Text("Submit", fontSize = 20.sp, fontWeight = FontWeight.Bold) }
