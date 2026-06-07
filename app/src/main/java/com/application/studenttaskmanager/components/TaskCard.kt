@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import com.application.studenttaskmanager.R
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun TaskCard(
@@ -23,9 +23,9 @@ fun TaskCard(
         modifier = modifier.fillMaxSize()
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_add),
+            imageVector = Icons.Default.Add,
             contentDescription = "Add Task",
-            tint = MaterialTheme.colorScheme.primary,
+            tint = Color(0xFFFFB74D),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(20.dp)

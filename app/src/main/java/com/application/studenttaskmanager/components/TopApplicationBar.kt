@@ -53,7 +53,6 @@ fun TopApplicationBar(
                     Column {
                         Text(
                             text = "Dashboard",
-                            color = MaterialTheme.colorScheme.primary,
                             fontSize = 26.sp,
                             fontWeight = FontWeight.ExtraBold
                         )
@@ -63,33 +62,30 @@ fun TopApplicationBar(
                     IconButton(onClick = {}) {
                         Icon(
                             Icons.Filled.Menu,
-                            contentDescription = "Menu Icon",
-                            tint = MaterialTheme.colorScheme.primary
+                            contentDescription = "Menu Icon"
                         )
                     }
                     IconButton(onClick = {}) {
                         Icon(
                             Icons.Filled.Search,
-                            contentDescription = "Search icon",
-                            tint = MaterialTheme.colorScheme.primary
+                            contentDescription = "Search icon"
                         )
                     }
                     IconButton(onClick = { menuStatus.value = true }) {
                         Icon(
                             Icons.Filled.MoreVert,
-                            contentDescription = "More icon",
-                            tint = MaterialTheme.colorScheme.primary
+                            contentDescription = "More icon"
                         )
 
                         DropdownMenu(
-                            containerColor = Color(0xFF1E1E1E),
+                            containerColor = MaterialTheme.colorScheme.surface,
                             expanded = menuStatus.value,
                             onDismissRequest = { menuStatus.value = false }) {
                             menuItems.forEach {
                                 DropdownMenuItem(text = {
                                     Text(
                                         text = it,
-                                        color = MaterialTheme.colorScheme.primary
+                                        color = Color(0xFFFFB74D)
                                     )
                                 }, onClick = {
                                     menuStatus.value = false
@@ -99,8 +95,8 @@ fun TopApplicationBar(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF1E1E1E),
-                    titleContentColor = Color.White,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = Color(0xFFFFB74D),
                     actionIconContentColor = Color(0xFFFFB74D),
                     navigationIconContentColor = Color(0xFFFFB74D)
                 )
