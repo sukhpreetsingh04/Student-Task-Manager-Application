@@ -1,5 +1,6 @@
 package com.application.studenttaskmanager.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@SuppressLint("DefaultLocale")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
@@ -31,6 +33,12 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
     var showDatePicker by remember { mutableStateOf(false) }
 
     val datePickerState = rememberDatePickerState()
+
+    var showTimePicker by remember { mutableStateOf(false) }
+
+    var selectedTime by remember { mutableStateOf("") }
+
+    val timePickerState = rememberTimePickerState()
 
     val myTextFieldColor = TextFieldDefaults.colors(
         focusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -50,7 +58,6 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
         focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
         unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
     )
-
 
     var selectedDate by remember {
         mutableStateOf("")
@@ -101,44 +108,91 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
 
                 modifier = Modifier.fillMaxWidth()
             )
-            if (showDatePicker) {
-                DatePickerDialog(
-                    onDismissRequest = { showDatePicker = false }, confirmButton = {
-                        Button(onClick = {
-                            val millis =
-                                datePickerState.selectedDateMillis
-                            if (millis != null) {
 
-                                val formatter =
-                                    SimpleDateFormat(
-                                        "dd/MM/yyyy",
-                                        Locale.getDefault()
-                                    )
+        }
 
-                                selectedDate =
-                                    formatter.format(Date(millis))
-                            }
-                            showDatePicker = false
-                        }) { Text("OK") }
-                    },
-                    dismissButton = {
-                        Button(onClick = { showDatePicker = false }) {
-                            Text("Cancel")
-                        }
-                    }
-                ) {
-                    DatePicker(
-                        state = datePickerState
-                    )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        TextField(
+            value = selectedTime,
+            onValueChange = {},
+            readOnly = true,
+            colors = myTextFieldColor,
+            label = { Text("Select Time") },
+            shape = RoundedCornerShape(12.dp),
+            trailingIcon = {
+                IconButton(onClick = { showTimePicker = true }) {
+                    Text("⏰")
                 }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { showTimePicker = true }
+        )
+
+        if (showDatePicker) {
+            DatePickerDialog(
+                onDismissRequest = { showDatePicker = false }, confirmButton = {
+                    Button(onClick = {
+                        val millis =
+                            datePickerState.selectedDateMillis
+                        if (millis != null) {
+
+                            val formatter =
+                                SimpleDateFormat(
+                                    "dd/MM/yyyy",
+                                    Locale.getDefault()
+                                )
+
+                            selectedDate =
+                                formatter.format(Date(millis))
+                        }
+                        showDatePicker = false
+                    }) { Text("OK") }
+                },
+                dismissButton = {
+                    Button(onClick = { showDatePicker = false }) {
+                        Text("Cancel")
+                    }
+                }
+            ) {
+                DatePicker(
+                    state = datePickerState
+                )
             }
+        }
+
+        if (showTimePicker) {
+            AlertDialog(
+                onDismissRequest = { showTimePicker = false },
+                confirmButton = {
+                    Button(onClick = {
+                        selectedTime = String.format(
+                            "%02d:%02d",
+                            timePickerState.hour,
+                            timePickerState.minute
+                        )
+                        showTimePicker = false
+                    }) {
+                        Text("OK")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { showTimePicker = false }) {
+                        Text("Cancel")
+                    }
+                },
+                text = {
+                    TimePicker(state = timePickerState)
+                }
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
-                onSubmit("$description - $selectedDate")
+                onSubmit("$description - $selectedDate - $selectedTime")
                 description = ""
                 selectedDate = ""
             },

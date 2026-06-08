@@ -19,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -51,16 +53,32 @@ fun DashBoard(
                         shape = RoundedCornerShape(8.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.surfaceVariant
+                        ),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 4.dp
                         )
                     ) {
                         Text(
                             text = task,
                             modifier = Modifier.padding(12.dp),
                             fontSize = 16.sp,
+                            fontWeight = FontWeight.ExtraBold,
                             color = Color(0xFFFFB74D)
                         )
                     }
                 }
+            }
+
+            if (tasks.isEmpty()) {
+                Text(
+                    text = "No tasks yet. Tap + to add one.",
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color(0xFFFFB74D),
+                    textAlign = TextAlign.Center
+                )
             }
 
             TaskCard(

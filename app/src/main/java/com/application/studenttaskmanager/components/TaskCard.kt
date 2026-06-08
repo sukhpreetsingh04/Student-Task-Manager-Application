@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddBox
 import androidx.compose.ui.graphics.Color
 
 @Composable
@@ -23,7 +23,7 @@ fun TaskCard(
         modifier = modifier.fillMaxSize()
     ) {
         Icon(
-            imageVector = Icons.Default.Add,
+            imageVector = Icons.Default.AddBox,
             contentDescription = "Add Task",
             tint = Color(0xFFFFB74D),
             modifier = Modifier
