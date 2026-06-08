@@ -25,6 +25,9 @@ A smart productivity companion for students by helping them manage tasks, improv
 
 # Screenshots
 
+## Welcome Screen
+<img width="368" height="797" alt="auth" src="https://github.com/user-attachments/assets/f5e793e7-dc94-488f-9f0f-53997d7cf529" />
+
 ## Dashboard
 <img width="368" height="797" alt="1" src="https://github.com/user-attachments/assets/0d8bd7f0-980a-4152-a27e-c6879b90644e" />
 <img width="370" height="797" alt="2" src="https://github.com/user-attachments/assets/bf4526ac-0172-498b-97c8-7ef14af3cab5" />
