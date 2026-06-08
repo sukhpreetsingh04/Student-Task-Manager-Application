@@ -13,6 +13,7 @@ reduce missed deadlines, and help students manage their daily schedules in a sim
 # Core Features
 1. User Authentication
 2. Dashboard
+
 3. Task Management
 4. Smart Scheduling
 5. Study and Habit Tracking
@@ -24,8 +25,15 @@ A smart productivity companion for students by helping them manage tasks, improv
 
 # Screenshots
 
+## Dashboard
+<img width="368" height="797" alt="1" src="https://github.com/user-attachments/assets/0d8bd7f0-980a-4152-a27e-c6879b90644e" />
+<img width="370" height="797" alt="2" src="https://github.com/user-attachments/assets/bf4526ac-0172-498b-97c8-7ef14af3cab5" />
+
 ## Add Tasks Pop - up
-<img width="368" height="797" alt="Screenshot 2026-06-07 225541" src="https://github.com/user-attachments/assets/138dcbf5-22dc-497d-a5cd-36aec59c8815" />
+<img width="368" height="797" alt="screenshot010n1190" src="https://github.com/user-attachments/assets/c21bfa0f-0340-4855-b532-0dd716d3c224" />
+<img width="370" height="797" alt="screenshot1013101010" src="https://github.com/user-attachments/assets/16a8fbdd-fdbb-470c-b684-76bc1169a42b" />
+
 
 ## DashBoard After Adding Tasks
-<img width="370" height="797" alt="Screenshot 2026-06-07 230047" src="https://github.com/user-attachments/assets/d182c78b-7e5d-48a7-9225-4967c669baac" />
+<img width="368" height="797" alt="screenshot(10)" src="https://github.com/user-attachments/assets/a0c0d967-25db-467c-9afc-bc9327eb375e" />
+<img width="370" height="797" alt="screenshot(11)" src="https://github.com/user-attachments/assets/7455cd5d-f622-4970-a558-b09071fc1af0" />
