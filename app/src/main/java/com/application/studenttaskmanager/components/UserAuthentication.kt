@@ -43,8 +43,17 @@ fun UserAuthentication(modifier: Modifier = Modifier) {
                 .background(Color.Black.copy(alpha = 0.35f))
         )
 
-        Box(modifier = Modifier.fillMaxWidth().padding(top = 40.dp), contentAlignment = Alignment.Center) {
-            Icon(painter = painterResource(R.drawable.app_logo), contentDescription = "App Logo")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 40.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.app_logo),
+                contentDescription = "App Logo",
+                tint = Color.White
+            )
         }
 
         Column(
