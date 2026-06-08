@@ -20,7 +20,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.text.font.FontWeight
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +29,7 @@ fun TopApplicationBar(
     content: @Composable (PaddingValues) -> Unit
 ) {
 
-    val menuStatus = remember() {
+    val menuStatus = rememberSaveable {
         mutableStateOf(false)
     }
 

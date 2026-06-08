@@ -14,7 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,13 +30,13 @@ import java.util.Locale
 @Composable
 fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
 
-    var showDatePicker by remember { mutableStateOf(false) }
+    var showDatePicker by rememberSaveable { mutableStateOf(false) }
 
     val datePickerState = rememberDatePickerState()
 
-    var showTimePicker by remember { mutableStateOf(false) }
+    var showTimePicker by rememberSaveable { mutableStateOf(false) }
 
-    var selectedTime by remember { mutableStateOf("") }
+    var selectedTime by rememberSaveable { mutableStateOf("") }
 
     val timePickerState = rememberTimePickerState()
 
@@ -59,11 +59,11 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
         unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
     )
 
-    var selectedDate by remember {
+    var selectedDate by rememberSaveable {
         mutableStateOf("")
     }
 
-    var description by remember {
+    var description by rememberSaveable {
         mutableStateOf("")
     }
 
@@ -192,9 +192,10 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
 
         Button(
             onClick = {
-                onSubmit("$description - $selectedDate - $selectedTime")
+                onSubmit("$description\n$selectedDate • $selectedTime")
                 description = ""
                 selectedDate = ""
+                selectedTime = ""
             },
             Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
