@@ -26,10 +26,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.application.studenttaskmanager.R
 
 @Composable
-fun UserAuthentication(modifier: Modifier = Modifier) {
+fun UserAuthentication(modifier: Modifier = Modifier, navController: NavController) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -89,7 +90,9 @@ fun UserAuthentication(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(30.dp))
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    navController.navigate("AuthDialog")
+                },
                 modifier = Modifier.size(200.dp, 50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFFB74D),
