@@ -40,6 +40,25 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
 
     val timePickerState = rememberTimePickerState()
 
+    val datePickerColors = DatePickerDefaults.colors(
+        containerColor = MaterialTheme.colorScheme.surface,
+
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        headlineContentColor = Color(0xFFFFB74D),
+
+        weekdayContentColor = MaterialTheme.colorScheme.onSurface,
+        dayContentColor = MaterialTheme.colorScheme.onSurface,
+
+        selectedDayContainerColor = Color(0xFFFFB74D),
+        selectedDayContentColor = Color.White,
+
+        todayDateBorderColor = Color(0xFFFFB74D),
+        todayContentColor = Color(0xFFFFB74D),
+
+        navigationContentColor = Color(0xFFFFB74D),
+        dividerColor = MaterialTheme.colorScheme.outlineVariant
+    )
+
     val myTextFieldColor = TextFieldDefaults.colors(
         focusedContainerColor = MaterialTheme.colorScheme.surface,
         unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -132,32 +151,45 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
 
         if (showDatePicker) {
             DatePickerDialog(
-                onDismissRequest = { showDatePicker = false }, confirmButton = {
-                    Button(onClick = {
-                        val millis =
-                            datePickerState.selectedDateMillis
-                        if (millis != null) {
+                onDismissRequest = { showDatePicker = false },
+                colors = datePickerColors,
+                confirmButton = {
+                    Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFFB74D),
+                            contentColor = Color(0xFFFFFFFF)
+                        ), onClick = {
+                            val millis =
+                                datePickerState.selectedDateMillis
+                            if (millis != null) {
 
-                            val formatter =
-                                SimpleDateFormat(
-                                    "dd/MM/yyyy",
-                                    Locale.getDefault()
-                                )
+                                val formatter =
+                                    SimpleDateFormat(
+                                        "dd/MM/yyyy",
+                                        Locale.getDefault()
+                                    )
 
-                            selectedDate =
-                                formatter.format(Date(millis))
-                        }
-                        showDatePicker = false
-                    }) { Text("OK") }
+                                selectedDate =
+                                    formatter.format(Date(millis))
+                            }
+                            showDatePicker = false
+                        }) { Text("OK") }
                 },
                 dismissButton = {
-                    Button(onClick = { showDatePicker = false }) {
-                        Text("Cancel")
+                    Button(
+                        onClick = { showDatePicker = false },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFFB74D),
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        )
+                    ) {
+                        Text(text = "Cancel")
                     }
                 }
             ) {
                 DatePicker(
-                    state = datePickerState
+                    state = datePickerState,
+                    colors = datePickerColors
                 )
             }
         }
@@ -166,24 +198,39 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
             AlertDialog(
                 onDismissRequest = { showTimePicker = false },
                 confirmButton = {
-                    Button(onClick = {
-                        selectedTime = String.format(
-                            "%02d:%02d",
-                            timePickerState.hour,
-                            timePickerState.minute
-                        )
-                        showTimePicker = false
-                    }) {
+                    Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFFB74D),
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        ), onClick = {
+                            selectedTime = String.format(
+                                "%02d:%02d",
+                                timePickerState.hour,
+                                timePickerState.minute
+                            )
+                            showTimePicker = false
+                        }) {
                         Text("OK")
                     }
                 },
                 dismissButton = {
-                    Button(onClick = { showTimePicker = false }) {
+                    Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFFB74D),
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        ), onClick = { showTimePicker = false }) {
                         Text("Cancel")
                     }
                 },
                 text = {
-                    TimePicker(state = timePickerState)
+                    TimePicker(
+                        state = timePickerState, colors = TimePickerDefaults.colors(
+                            selectorColor = Color(0xFFFFB74D),
+                            clockDialColor = Color(0xFF3A3A40),
+                            timeSelectorSelectedContainerColor = Color(0xFFFFB74D),
+                            timeSelectorSelectedContentColor = Color.White
+                        )
+                    )
                 }
             )
         }
