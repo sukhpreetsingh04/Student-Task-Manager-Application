@@ -21,3 +21,11 @@ reduce missed deadlines, and help students manage their daily schedules in a sim
 
 # Goal of Student Task Management Application
 A smart productivity companion for students by helping them manage tasks, improve focus, maintain consistency, and achieve better academic organization.
+
+# Screenshots
+
+## Add Tasks Pop - up
+<img width="368" height="797" alt="Screenshot 2026-06-07 225541" src="https://github.com/user-attachments/assets/138dcbf5-22dc-497d-a5cd-36aec59c8815" />
+
+## DashBoard After Adding Tasks
+<img width="370" height="797" alt="Screenshot 2026-06-07 230047" src="https://github.com/user-attachments/assets/d182c78b-7e5d-48a7-9225-4967c669baac" />
