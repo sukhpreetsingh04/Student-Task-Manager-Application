@@ -39,5 +39,27 @@ A smart productivity companion for students by helping them manage tasks, improv
 ## Dashboard
 <p align="center">
   <img src="docs/screenshots/light-theme/Dashboard-light-theme.jpeg" alt="Dashboard in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/Dashboard-dark-theme.jpeg" alt="Dashboard in Light Theme" width="300"/>
+  <img src="docs/screenshots/dark-theme/Dashboard-dark-theme.jpeg" alt="Dashboard in Dark Theme" width="300"/>
+</p>
+
+## Dashboard Options Menu
+<p align="center">
+  <img src="docs/screenshots/light-theme/Dashboard-with-option-menu-light-theme.jpeg" alt="Dashboard and Options in Light Theme" width="300"/>
+  <img src="docs/screenshots/dark-theme/Dashboard-with-option-menu-dark-theme.jpeg" alt="Dashboard and Options in Light Theme" width="300"/>
+</p>
+
+## Adding Tasks
+<p align="center">
+  <img src="docs/screenshots/light-theme/add-task-screen-pop-up-light-theme.jpeg" alt="Tasks View in Light Theme" width="300"/>
+  <img src="docs/screenshots/dark-theme/add-task-screen-pop-up-dark-theme.jpeg" alt="Tasks View in Light Theme" width="300"/>
+</p>
+
+## Specifying Time & Date under Tasks
+<p align="center">
+  <img src="docs/screenshots/light-theme/date-selection-light-theme.jpeg" alt="Date Selection under Light Theme" width="300"/>
+  <img src="docs/screenshots/dark-theme/date-selection-dark-theme.jpeg" alt="Date Selection under Dark Theme" width="300"/>
+</p>
+<p align="center">
+  <img src="docs/screenshots/light-theme/time-selection-light-theme.jpeg" alt="" width="300"/>
+  <img src="docs/screenshots/dark-theme/time-selection-dark-theme.jpeg" alt="" width="300"/>
 </p>
