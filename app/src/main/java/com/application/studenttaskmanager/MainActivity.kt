@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.application.studenttaskmanager.components.Navigation
-//import com.application.studenttaskmanager.components.UserAuthentication
 import com.application.studenttaskmanager.ui.theme.StudentTaskManagerTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +21,6 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Column(modifier = Modifier.padding(innerPadding)) {
                         Navigation()
-//                        UserAuthentication()
                     }
                 }
             }

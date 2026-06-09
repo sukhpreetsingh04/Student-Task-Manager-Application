@@ -9,11 +9,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -26,11 +35,37 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.application.studenttaskmanager.R
 
 @Composable
 fun UserAuthentication(modifier: Modifier = Modifier, navController: NavController) {
+
+    var userEmail by rememberSaveable {
+        mutableStateOf("")
+    }
+
+    var showDialog by rememberSaveable { mutableStateOf(false) }
+
+    val myTextFieldColor = TextFieldDefaults.colors(
+        focusedContainerColor = MaterialTheme.colorScheme.surface,
+        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+
+        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+
+        focusedIndicatorColor = Color(0xFFFFB74D),
+        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+
+        cursorColor = Color(0xFFFFB74D),
+
+        focusedLabelColor = Color(0xFFFFB74D),
+        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+
+        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
+    )
 
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -91,7 +126,7 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
 
             Button(
                 onClick = {
-                    navController.navigate("AuthDialog")
+                    showDialog = true
                 },
                 modifier = Modifier.size(200.dp, 50.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -100,6 +135,55 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                 )
             ) {
                 Text(text = "Get Started", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            }
+        }
+
+        if (showDialog) {
+            Dialog(
+                onDismissRequest = {
+                    showDialog = false
+                }
+            ) {
+                Card(
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "Welcome",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        TextField(
+                            value = userEmail,
+                            onValueChange = { userEmail = it },
+                            label = { Text("Email") },
+                            colors = myTextFieldColor,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Button(
+                            onClick = {
+                                showDialog = false
+                                navController.navigate("DashBoard")
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFFFB74D),
+                                contentColor = Color(0xFF1A1A1A)
+                            )
+                        ) {
+                            Text("Sign Up")
+                        }
+                    }
+                }
             }
         }
     }
