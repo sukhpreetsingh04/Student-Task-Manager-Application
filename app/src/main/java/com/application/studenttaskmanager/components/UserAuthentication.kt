@@ -1,5 +1,6 @@
 package com.application.studenttaskmanager.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -97,10 +98,11 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                 .padding(top = 40.dp),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
+            Image(
                 painter = painterResource(R.drawable.app_logo),
                 contentDescription = "App Logo",
-                tint = Color.White
+                modifier = Modifier.size(150.dp),
+                contentScale = ContentScale.Fit
             )
         }
 

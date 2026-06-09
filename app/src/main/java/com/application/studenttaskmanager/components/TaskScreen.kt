@@ -3,6 +3,7 @@ package com.application.studenttaskmanager.components
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -226,7 +227,10 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                     TimePicker(
                         state = timePickerState, colors = TimePickerDefaults.colors(
                             selectorColor = Color(0xFFFFB74D),
-                            clockDialColor = Color(0xFF3A3A40),
+                            clockDialColor = if (isSystemInDarkTheme())
+                                Color(0xFF3A3A40)
+                            else
+                                Color(0xFFF3F3F7),
                             timeSelectorSelectedContainerColor = Color(0xFFFFB74D),
                             timeSelectorSelectedContentColor = Color.White
                         )
