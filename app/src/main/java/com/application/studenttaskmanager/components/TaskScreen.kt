@@ -87,7 +87,7 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background, shape = RoundedCornerShape(12.dp))
             .padding(20.dp)

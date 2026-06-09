@@ -10,10 +10,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -32,6 +36,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +49,12 @@ import com.application.studenttaskmanager.R
 fun UserAuthentication(modifier: Modifier = Modifier, navController: NavController) {
 
     var userEmail by rememberSaveable {
+        mutableStateOf("")
+    }
+
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
+
+    var userPassword by rememberSaveable {
         mutableStateOf("")
     }
 
@@ -67,7 +79,7 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
         unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
     )
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -166,6 +178,38 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                             label = { Text("Email") },
                             colors = myTextFieldColor,
                             shape = RoundedCornerShape(12.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        TextField(
+                            value = userPassword,
+                            onValueChange = { userPassword = it },
+                            label = { Text("Password") },
+                            colors = myTextFieldColor,
+                            shape = RoundedCornerShape(12.dp),
+                            visualTransformation =
+                                if (passwordVisible)
+                                    VisualTransformation.None
+                                else
+                                    PasswordVisualTransformation(),
+
+                            trailingIcon = {
+                                IconButton(
+                                    onClick = {
+                                        passwordVisible = !passwordVisible
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector =
+                                            if (passwordVisible)
+                                                Icons.Default.Visibility
+                                            else
+                                                Icons.Default.VisibilityOff,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))
