@@ -1,5 +1,6 @@
 package com.application.studenttaskmanager.components
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,6 +36,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -49,15 +52,17 @@ import com.application.studenttaskmanager.R
 @Composable
 fun UserAuthentication(modifier: Modifier = Modifier, navController: NavController) {
 
-    var userEmail by rememberSaveable {
+    var userEmail by remember {
         mutableStateOf("")
     }
 
-    var passwordVisible by rememberSaveable { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false) }
 
-    var userPassword by rememberSaveable {
+    var userPassword by remember {
         mutableStateOf("")
     }
+
+    val toastContext = LocalContext.current
 
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -187,7 +192,7 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                         TextField(
                             value = userPassword,
                             onValueChange = { userPassword = it },
-                            label = { Text("Password") },
+                            label = { Text(text = "Password") },
                             colors = myTextFieldColor,
                             shape = RoundedCornerShape(12.dp),
                             visualTransformation =
@@ -219,7 +224,17 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                         Button(
                             onClick = {
                                 showDialog = false
-                                navController.navigate("DashBoard")
+                                    if(userEmail.isEmpty() || userPassword.isEmpty()) {
+
+                                        Toast.makeText(toastContext, "Please enter all data", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        try {
+                                            navController.navigate("DashBoard") {
+                                            }
+                                        } catch (e: IllegalArgumentException) {
+                                            Toast.makeText(toastContext, "Please enter valid data", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
                             },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFFFB74D),

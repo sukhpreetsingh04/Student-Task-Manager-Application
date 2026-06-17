@@ -54,7 +54,6 @@ fun TopApplicationBar(
         "Logout"
     )
 
-
     Scaffold(
         topBar = {
             TopAppBar(

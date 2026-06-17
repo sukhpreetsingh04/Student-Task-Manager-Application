@@ -1,5 +1,6 @@
 package com.application.studenttaskmanager.components
 
+import android.R.attr.content
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
@@ -44,6 +46,8 @@ fun DashBoard(
     var showTaskDialog by rememberSaveable { mutableStateOf(false) }
     val lightCardColor = Color(0xFFFFFFFF)
     val darkCardColor = Color(0xFF2A2A2A)
+    val searchState = rememberTextFieldState()
+    val mockResults = listOf("Result 1", "Result 2")
 
     TopApplicationBar { paddingValues ->
         Box(
