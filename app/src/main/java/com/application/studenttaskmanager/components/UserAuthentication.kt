@@ -53,17 +53,17 @@ import com.application.studenttaskmanager.R
 @Composable
 fun UserAuthentication(modifier: Modifier = Modifier, navController: NavController) {
 
-    var userName = remember {
+    var userName = rememberSaveable {
         mutableStateOf("")
     }
 
-    var userEmail = remember {
+    var userEmail = rememberSaveable {
         mutableStateOf("")
     }
 
-    var passwordVisible by remember { mutableStateOf(false) }
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
-    var userPassword = remember {
+    var userPassword = rememberSaveable {
         mutableStateOf("")
     }
 
