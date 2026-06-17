@@ -41,17 +41,16 @@ fun TopApplicationBar(
         "All Tasks",
         "WishList",
         "Filter",
-        "Sort"
+        "Sort",
+        "Settings",
+        "Logout"
     )
 
     val moreItems = listOf(
         "Personal",
-        "Your Favourites",
         "DeadLines",
         "Your Progress",
-        "Analytics and Weekly Reports",
-        "Settings",
-        "Logout"
+        "Analytics and Weekly Reports"
     )
 
     Scaffold(

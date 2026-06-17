@@ -1,5 +1,6 @@
 package com.application.studenttaskmanager.components
 
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -52,13 +53,17 @@ import com.application.studenttaskmanager.R
 @Composable
 fun UserAuthentication(modifier: Modifier = Modifier, navController: NavController) {
 
-    var userEmail by remember {
+    var userName = remember {
+        mutableStateOf("")
+    }
+
+    var userEmail = remember {
         mutableStateOf("")
     }
 
     var passwordVisible by remember { mutableStateOf(false) }
 
-    var userPassword by remember {
+    var userPassword = remember {
         mutableStateOf("")
     }
 
@@ -180,8 +185,18 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                         Spacer(modifier = Modifier.height(20.dp))
 
                         TextField(
-                            value = userEmail,
-                            onValueChange = { userEmail = it },
+                            value = userName.value,
+                            onValueChange = { userName.value = it },
+                            label = { Text("User Name") },
+                            colors = myTextFieldColor,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        TextField(
+                            value = userEmail.value,
+                            onValueChange = { userEmail.value = it },
                             label = { Text("Email") },
                             colors = myTextFieldColor,
                             shape = RoundedCornerShape(12.dp)
@@ -190,8 +205,8 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                         Spacer(modifier = Modifier.height(20.dp))
 
                         TextField(
-                            value = userPassword,
-                            onValueChange = { userPassword = it },
+                            value = userPassword.value,
+                            onValueChange = { userPassword.value = it },
                             label = { Text(text = "Password") },
                             colors = myTextFieldColor,
                             shape = RoundedCornerShape(12.dp),
@@ -224,13 +239,12 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                         Button(
                             onClick = {
                                 showDialog = false
-                                    if(userEmail.isEmpty() || userPassword.isEmpty()) {
+                                    if(userEmail.value.isEmpty() || userPassword.value.isEmpty()) {
 
                                         Toast.makeText(toastContext, "Please enter all data", Toast.LENGTH_SHORT).show()
                                     } else {
                                         try {
-                                            navController.navigate("DashBoard") {
-                                            }
+                                            navController.navigate("DashBoard/${Uri.encode(userName.value)}")
                                         } catch (e: IllegalArgumentException) {
                                             Toast.makeText(toastContext, "Please enter valid data", Toast.LENGTH_SHORT).show()
                                         }
