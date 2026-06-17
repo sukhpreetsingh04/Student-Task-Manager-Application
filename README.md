@@ -63,3 +63,9 @@ A smart productivity companion for students by helping them manage tasks, improv
   <img src="docs/screenshots/light-theme/time-selection-light-theme.jpeg" alt="" width="300"/>
   <img src="docs/screenshots/dark-theme/time-selection-dark-theme.jpeg" alt="" width="300"/>
 </p>
+
+## Dashboard After Adding Tasks
+<p align="center">
+  <img src="docs/screenshots/light-theme/Dashboard-with-added-tasks-light-theme.jpg" alt="Dashboard and Tasks in Light Theme" width="300"/>
+  <img src="docs/screenshots/dark-theme/Dashboard-with-added-tasks-dark-theme.jpg" alt="Dashboard and Tasks in Light Theme" width="300"/>
+</p>
