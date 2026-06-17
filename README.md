@@ -38,19 +38,19 @@ A smart productivity companion for students by helping them manage tasks, improv
 
 ## Dashboard
 <p align="center">
-  <img src="docs/screenshots/light-theme/dashboard-with-more-menu-light-theme.jpeg" alt="Dashboard in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/dashboard-with-more-menu-dark-theme.jpeg" alt="Dashboard in Dark Theme" width="300"/>
+  <img src="docs/screenshots/light-theme/Dashboard-light-theme.jpeg" alt="Dashboard in Light Theme" width="300"/>
+  <img src="docs/screenshots/dark-theme/Dashboard-dark-theme.jpeg" alt="Dashboard in Dark Theme" width="300"/>
 </p>
 
 ## Dashboard with Menu
 <p align="center">
   <p align="center">
-  <img src="docs/screenshots/light-theme/Dashboard-with-option-menu-light-theme.jpeg" alt="Dashboard Menu in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/Dashboard-with-option-menu-dark-theme.jpeg" alt="Dashboard Menu in Light Theme" width="300"/>
+  <img src="docs/screenshots/light-theme/dashboard-with-more-menu-light-theme.jpeg" alt="Dashboard Menu in Light Theme" width="300"/>
+  <img src="docs/screenshots/dark-theme/dashboard-with-more-menu-dark-theme.jpeg" alt="Dashboard Menu in Light Theme" width="300"/>
 </p>
 </p>
 
-## Dashboard Options Menu
+## Dashboard with Options 
 <p align="center">
   <img src="docs/screenshots/light-theme/Dashboard-with-option-menu-light-theme.jpeg" alt="Dashboard and Options in Light Theme" width="300"/>
   <img src="docs/screenshots/dark-theme/Dashboard-with-option-menu-dark-theme.jpeg" alt="Dashboard and Options in Light Theme" width="300"/>
