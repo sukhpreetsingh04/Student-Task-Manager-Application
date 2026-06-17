@@ -33,10 +33,19 @@ fun TopApplicationBar(
         mutableStateOf(false)
     }
 
+    val moreStatus = rememberSaveable {
+        mutableStateOf(false)
+    }
+
     val menuItems = listOf(
         "All Tasks",
+        "WishList",
+        "Filter",
+        "Sort"
+    )
+
+    val moreItems = listOf(
         "Personal",
-        "Wishlist",
         "Your Favourites",
         "DeadLines",
         "Your Progress",
@@ -59,24 +68,11 @@ fun TopApplicationBar(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {menuStatus.value = true}) {
                         Icon(
                             Icons.Filled.Menu,
                             contentDescription = "Menu Icon"
                         )
-                    }
-                    IconButton(onClick = {}) {
-                        Icon(
-                            Icons.Filled.Search,
-                            contentDescription = "Search icon"
-                        )
-                    }
-                    IconButton(onClick = { menuStatus.value = true }) {
-                        Icon(
-                            Icons.Filled.MoreVert,
-                            contentDescription = "More icon"
-                        )
-
                         DropdownMenu(
                             containerColor = MaterialTheme.colorScheme.surface,
                             expanded = menuStatus.value,
@@ -89,6 +85,33 @@ fun TopApplicationBar(
                                     )
                                 }, onClick = {
                                     menuStatus.value = false
+                                })
+                            }
+                        }
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(
+                            Icons.Filled.Search,
+                            contentDescription = "Search icon"
+                        )
+                    }
+                    IconButton(onClick = { moreStatus.value = true }) {
+                        Icon(
+                            Icons.Filled.MoreVert,
+                            contentDescription = "More icon"
+                        )
+                        DropdownMenu(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            expanded = moreStatus.value,
+                            onDismissRequest = { moreStatus.value = false }) {
+                            moreItems.forEach {
+                                DropdownMenuItem(text = {
+                                    Text(
+                                        text = it,
+                                        color = Color(0xFFFFB74D)
+                                    )
+                                }, onClick = {
+                                    moreStatus.value = false
                                 })
                             }
                         }
