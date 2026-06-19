@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">StudentTaskManager</string>
+    <string-array name="taskList">
+
+        <item>Default</item>
+        <item>Personal</item>
+        <item>Shopping</item>
+        <item>Wishlist</item>
+        <item>Work</item>
+
+    </string-array>
 </resources>
