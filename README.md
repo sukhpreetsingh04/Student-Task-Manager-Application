@@ -58,8 +58,8 @@ A smart productivity companion for students by helping them manage tasks, improv
 
 ## Adding Tasks
 <p align="center">
-  <img src="docs/screenshots/light-theme/add-task-screen-pop-up-light-theme.jpeg" alt="Tasks View in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/add-task-screen-pop-up-dark-theme.jpeg" alt="Tasks View in Light Theme" width="300"/>
+  <img src="docs/screenshots/light-theme/add-task-screen-light-theme.jpeg" alt="Tasks View in Light Theme" width="300"/>
+  <img src="docs/screenshots/dark-theme/add-task-screen-dark-theme.jpeg" alt="Tasks View in Light Theme" width="300"/>
 </p>
 
 ## Specifying Time & Date under Tasks
