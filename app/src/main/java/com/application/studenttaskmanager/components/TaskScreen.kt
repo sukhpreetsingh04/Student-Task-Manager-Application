@@ -1,7 +1,7 @@
 package com.application.studenttaskmanager.components
 
-import com.application.studenttaskmanager.R
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -21,7 +21,31 @@ import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material3.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.TimePickerDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,54 +54,50 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.application.studenttaskmanager.R
+import com.application.studenttaskmanager.data.TaskDraft
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 @SuppressLint("DefaultLocale")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
-
+fun TaskScreen(
+    modifier: Modifier = Modifier,
+    onSubmit: (TaskDraft) -> Unit,
+    onCancel: () -> Unit
+) {
+    val context = LocalContext.current
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
-
     var showTimePicker by rememberSaveable { mutableStateOf(false) }
-
     val datePickerState = rememberDatePickerState()
-
     val timePickerState = rememberTimePickerState()
-
-    var expanded by rememberSaveable {
-        mutableStateOf(false)
-    }
-
+    var expanded by rememberSaveable { mutableStateOf(false) }
     val taskList = stringArrayResource(R.array.taskList)
-
-    val itemPosition = remember {
-        mutableStateOf(0)
-    }
-
+    val itemPosition = remember { mutableStateOf(0) }
     var selectedTime by rememberSaveable { mutableStateOf("") }
+    var selectedDate by rememberSaveable { mutableStateOf("") }
+    var selectedDateMillis by rememberSaveable { mutableStateOf<Long?>(null) }
+    var description by rememberSaveable { mutableStateOf("") }
 
     val datePickerColors = DatePickerDefaults.colors(
         containerColor = MaterialTheme.colorScheme.surface,
-
         titleContentColor = MaterialTheme.colorScheme.onSurface,
         headlineContentColor = Color(0xFFFFB74D),
-
         weekdayContentColor = MaterialTheme.colorScheme.onSurface,
         dayContentColor = MaterialTheme.colorScheme.onSurface,
-
         selectedDayContainerColor = Color(0xFFFFB74D),
         selectedDayContentColor = Color.White,
-
         todayDateBorderColor = Color(0xFFFFB74D),
         todayContentColor = Color(0xFFFFB74D),
-
         navigationContentColor = Color(0xFFFFB74D),
         dividerColor = MaterialTheme.colorScheme.outlineVariant
     )
@@ -85,29 +105,16 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
     val outLinedTextFieldColors = TextFieldDefaults.colors(
         focusedContainerColor = MaterialTheme.colorScheme.surface,
         unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-
         focusedTextColor = MaterialTheme.colorScheme.onSurface,
         unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-
         focusedIndicatorColor = Color(0xFFFFB74D),
         unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-
         cursorColor = Color(0xFFFFB74D),
-
         focusedLabelColor = Color(0xFFFFB74D),
         unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-
         focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
         unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
     )
-
-    var selectedDate by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var description by rememberSaveable {
-        mutableStateOf("")
-    }
 
     if (showDatePicker) {
         DatePickerDialog(
@@ -117,23 +124,20 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                 Button(
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFB74D),
-                        contentColor = Color(0xFFFFFFFF)
-                    ), onClick = {
-                        val millis =
-                            datePickerState.selectedDateMillis
+                        contentColor = Color.White
+                    ),
+                    onClick = {
+                        val millis = datePickerState.selectedDateMillis
                         if (millis != null) {
-
-                            val formatter =
-                                SimpleDateFormat(
-                                    "dd/MM/yyyy",
-                                    Locale.getDefault()
-                                )
-
-                            selectedDate =
-                                formatter.format(Date(millis))
+                            selectedDateMillis = millis
+                            selectedDate = SimpleDateFormat(
+                                "dd/MM/yyyy",
+                                Locale.getDefault()
+                            ).format(Date(millis))
                         }
                         showDatePicker = false
-                    }) { Text("OK") }
+                    }
+                ) { Text("OK") }
             },
             dismissButton = {
                 Button(
@@ -142,15 +146,10 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                         containerColor = Color(0xFFFFB74D),
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )
-                ) {
-                    Text(text = "Cancel")
-                }
+                ) { Text("Cancel") }
             }
         ) {
-            DatePicker(
-                state = datePickerState,
-                colors = datePickerColors
-            )
+            DatePicker(state = datePickerState, colors = datePickerColors)
         }
     }
 
@@ -162,29 +161,30 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFB74D),
                         contentColor = MaterialTheme.colorScheme.onPrimary
-                    ), onClick = {
+                    ),
+                    onClick = {
                         selectedTime = String.format(
                             "%02d:%02d",
                             timePickerState.hour,
                             timePickerState.minute
                         )
                         showTimePicker = false
-                    }) {
-                    Text("OK")
-                }
+                    }
+                ) { Text("OK") }
             },
             dismissButton = {
                 Button(
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFB74D),
                         contentColor = MaterialTheme.colorScheme.onPrimary
-                    ), onClick = { showTimePicker = false }) {
-                    Text("Cancel")
-                }
+                    ),
+                    onClick = { showTimePicker = false }
+                ) { Text("Cancel") }
             },
             text = {
                 TimePicker(
-                    state = timePickerState, colors = TimePickerDefaults.colors(
+                    state = timePickerState,
+                    colors = TimePickerDefaults.colors(
                         selectorColor = Color(0xFFFFB74D),
                         clockDialColor = if (isSystemInDarkTheme())
                             Color(0xFF3A3A40)
@@ -202,16 +202,13 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = "New Task",
-                        color = Color(0xFFFFB74D)
-                    )
+                    Text(text = "New Task", color = Color(0xFFFFB74D))
                 },
                 navigationIcon = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = onCancel) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "ArrowBack icon"
+                            contentDescription = "Back"
                         )
                     }
                 },
@@ -226,8 +223,37 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
+                    if (description.isBlank()) {
+                        Toast.makeText(context, "Please enter a task", Toast.LENGTH_SHORT).show()
+                        return@FloatingActionButton
+                    }
+
                     onSubmit(
-                        "$description\n$selectedDate • $selectedTime\n${taskList[itemPosition.value]}"
+                        TaskDraft(
+                            title = description,
+                            category = taskList[itemPosition.value],
+                            dueAtMillis = selectedDateMillis?.let { millis ->
+                                val utcDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                                    .apply {
+                                        timeInMillis = millis
+                                    }
+
+                                Calendar.getInstance()
+                                    .apply {
+                                        set(Calendar.YEAR, utcDate.get(Calendar.YEAR))
+                                        set(Calendar.MONTH, utcDate.get(Calendar.MONTH))
+                                        set(
+                                            Calendar.DAY_OF_MONTH,
+                                            utcDate.get(Calendar.DAY_OF_MONTH)
+                                        )
+                                        set(Calendar.HOUR_OF_DAY, timePickerState.hour)
+                                        set(Calendar.MINUTE, timePickerState.minute)
+                                        set(Calendar.SECOND, 0)
+                                        set(Calendar.MILLISECOND, 0)
+                                    }
+                                    .timeInMillis
+                            }
+                        )
                     )
                 }
             ) {
@@ -253,7 +279,6 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))
 
-
                 Text(
                     text = "What is to be done?",
                     fontWeight = FontWeight.Bold,
@@ -261,7 +286,6 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
-
 
                 OutlinedTextField(
                     value = description,
@@ -271,21 +295,17 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                     colors = outLinedTextFieldColors,
                     shape = RoundedCornerShape(12.dp),
                     trailingIcon = {
-                        IconButton(
-                            onClick = {}
-                        ) {
+                        IconButton(onClick = {}) {
                             Icon(
                                 imageVector = Icons.Filled.Mic,
-                                contentDescription = "Text-to-Speech-recognition-icon",
+                                contentDescription = "Voice input",
                                 tint = Color(0xFFFFB74D)
                             )
                         }
-                    },
+                    }
                 )
 
-
                 Spacer(modifier = Modifier.height(16.dp))
-
 
                 Text(
                     text = "Notification",
@@ -293,14 +313,13 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                     fontSize = 20.sp
                 )
 
-
                 Spacer(modifier = Modifier.height(16.dp))
-
 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { showDatePicker = true }) {
+                        .clickable { showDatePicker = true }
+                ) {
                     OutlinedTextField(
                         value = selectedDate,
                         onValueChange = {},
@@ -308,21 +327,15 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                         colors = outLinedTextFieldColors,
                         label = { Text("Not Set") },
                         shape = RoundedCornerShape(12.dp),
-
                         trailingIcon = {
-                            IconButton(
-                                onClick = {
-                                    showDatePicker = true
-                                }
-                            ) {
+                            IconButton(onClick = { showDatePicker = true }) {
                                 Icon(
                                     imageVector = Icons.Filled.CalendarMonth,
-                                    contentDescription = "calendar-icon",
+                                    contentDescription = "Select date",
                                     tint = Color(0xFFFFB74D)
                                 )
                             }
                         },
-
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -340,7 +353,7 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                         IconButton(onClick = { showTimePicker = true }) {
                             Icon(
                                 imageVector = Icons.Filled.Alarm,
-                                contentDescription = "time-selection-icon",
+                                contentDescription = "Select time",
                                 tint = Color(0xFFFFB74D)
                             )
                         }
@@ -362,39 +375,28 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
 
                 ExposedDropdownMenuBox(
                     expanded = expanded,
-                    onExpandedChange = {
-                        expanded = !expanded
-                    }
+                    onExpandedChange = { expanded = !expanded }
                 ) {
-
                     OutlinedTextField(
                         value = taskList[itemPosition.value],
                         onValueChange = {},
                         readOnly = true,
                         modifier = Modifier
-                            .menuAnchor(
-                                ExposedDropdownMenuAnchorType.PrimaryNotEditable
-                            )
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         colors = outLinedTextFieldColors,
                         trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(
-                                expanded = expanded
-                            )
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                         }
                     )
 
                     ExposedDropdownMenu(
                         expanded = expanded,
-                        onDismissRequest = {
-                            expanded = false
-                        }
+                        onDismissRequest = { expanded = false }
                     ) {
                         taskList.forEachIndexed { index, task ->
                             DropdownMenuItem(
-                                text = {
-                                    Text(task)
-                                },
+                                text = { Text(task) },
                                 onClick = {
                                     itemPosition.value = index
                                     expanded = false

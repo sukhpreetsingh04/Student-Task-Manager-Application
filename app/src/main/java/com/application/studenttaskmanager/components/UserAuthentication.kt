@@ -1,6 +1,5 @@
 package com.application.studenttaskmanager.components
 
-import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -47,29 +47,35 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavController
 import com.application.studenttaskmanager.R
+import com.application.studenttaskmanager.data.User
 
 @Composable
-fun UserAuthentication(modifier: Modifier = Modifier, navController: NavController) {
+fun UserAuthentication(
+    modifier: Modifier = Modifier,
+    onLogin: (email: String, password: String) -> Result<User>,
+    onRegister: (name: String, email: String, password: String) -> Result<User>,
+    onAuthenticated: (User) -> Unit
+) {
 
-    var userName = rememberSaveable {
+    val userName = rememberSaveable {
         mutableStateOf("")
     }
 
-    var userEmail = rememberSaveable {
+    val userEmail = rememberSaveable {
         mutableStateOf("")
     }
 
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
-    var userPassword = rememberSaveable {
+    val userPassword = rememberSaveable {
         mutableStateOf("")
     }
 
     val toastContext = LocalContext.current
 
     var showDialog by rememberSaveable { mutableStateOf(false) }
+    var isLoginMode by rememberSaveable { mutableStateOf(true) }
 
     val myTextFieldColor = TextFieldDefaults.colors(
         focusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -177,22 +183,24 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "Welcome",
+                            text = if (isLoginMode) "Welcome Back" else "Create Account",
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        TextField(
-                            value = userName.value,
-                            onValueChange = { userName.value = it },
-                            label = { Text("User Name") },
-                            colors = myTextFieldColor,
-                            shape = RoundedCornerShape(12.dp)
-                        )
+                        if (!isLoginMode) {
+                            TextField(
+                                value = userName.value,
+                                onValueChange = { userName.value = it },
+                                label = { Text("User Name") },
+                                colors = myTextFieldColor,
+                                shape = RoundedCornerShape(12.dp)
+                            )
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                            Spacer(modifier = Modifier.height(20.dp))
+                        }
 
                         TextField(
                             value = userEmail.value,
@@ -238,16 +246,24 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
 
                         Button(
                             onClick = {
-                                showDialog = false
-                                    if(userEmail.value.isEmpty() || userPassword.value.isEmpty()) {
-
-                                        Toast.makeText(toastContext, "Please enter all data", Toast.LENGTH_SHORT).show()
+                                val result =
+                                    if (isLoginMode) {
+                                        onLogin(userEmail.value, userPassword.value)
                                     } else {
-                                        try {
-                                            navController.navigate("DashBoard/${Uri.encode(userName.value)}")
-                                        } catch (e: IllegalArgumentException) {
-                                            Toast.makeText(toastContext, "Please enter valid data", Toast.LENGTH_SHORT).show()
-                                        }
+                                        onRegister(userName.value, userEmail.value, userPassword.value)
+                                    }
+
+                                result
+                                    .onSuccess { user ->
+                                        showDialog = false
+                                        onAuthenticated(user)
+                                    }
+                                    .onFailure { error ->
+                                        Toast.makeText(
+                                            toastContext,
+                                            error.message ?: "Please enter valid data",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                             },
                             colors = ButtonDefaults.buttonColors(
@@ -255,7 +271,18 @@ fun UserAuthentication(modifier: Modifier = Modifier, navController: NavControll
                                 contentColor = Color(0xFF1A1A1A)
                             )
                         ) {
-                            Text("Sign Up")
+                            Text(if (isLoginMode) "Login" else "Sign Up")
+                        }
+
+                        TextButton(
+                            onClick = {
+                                isLoginMode = !isLoginMode
+                            }
+                        ) {
+                            Text(
+                                text = if (isLoginMode) "New student? Sign up" else "Already registered? Login",
+                                color = Color(0xFFFFB74D)
+                            )
                         }
                     }
                 }

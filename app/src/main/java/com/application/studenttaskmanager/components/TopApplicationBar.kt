@@ -33,6 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopApplicationBar(
+    onMenuItemSelected: (String) -> Unit = {},
+    onMoreItemSelected: (String) -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
 
@@ -121,6 +123,7 @@ fun TopApplicationBar(
                                     )
                                 }, onClick = {
                                     menuStatus.value = false
+                                    onMenuItemSelected(it)
                                 })
                             }
                         }
@@ -150,6 +153,7 @@ fun TopApplicationBar(
                                     )
                                 }, onClick = {
                                     moreStatus.value = false
+                                    onMoreItemSelected(it)
                                 })
                             }
                         }
