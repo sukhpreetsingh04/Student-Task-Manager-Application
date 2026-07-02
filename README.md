@@ -24,56 +24,29 @@ reduce missed deadlines, and help students manage their daily schedules in a sim
 A smart productivity companion for students by helping them manage tasks, improve focus, maintain consistency, and achieve better academic organization.
 
 # Screenshots
-## Welcome Screen
-<p align="center">
-  <img src="docs/screenshots/light-theme/Get-Started-light-theme.jpeg" alt="Welcome Screen in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/Get-Started-dark-theme.jpeg" alt="Welcome Screen in DarkTheme" width="300"/>
+## Welcome Screen and Login/Sign Up Authentication
+<p text-align="center">
+  <img src="docs/screenshots/showcase/welcome.jpeg" alt="Welcome Screen" width="300"/>
+  <img src="docs/screenshots/showcase/login.jpeg" alt="Sign In or login" width="300"/>
 </p>
 
-## Login/Sign Up Authentication
-<p align="center">
-  <img src="docs/screenshots/light-theme/Login-Pop-pup-Light-Theme.jpeg" alt="Sign In/Sign Up Dialog in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/Login-Pop-pup-Dark-Theme.jpeg" alt="Sign In/Sign Up Dialog in Dark Theme" width="300"/>
+## Dashboard and Adding Tasks
+<p text-align="center">
+  <img src="docs/screenshots/showcase/Dashboard.jpeg" alt="Dashboard" width="300"/> 
+  <img src="docs/screenshots/showcase/add-task.jpeg" alt="add-task" width="300"/>
 </p>
 
-## Dashboard
-<p align="center">
-  <img src="docs/screenshots/light-theme/Dashboard-light-theme.jpeg" alt="Dashboard in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/Dashboard-dark-theme.jpeg" alt="Dashboard in Dark Theme" width="300"/>
+## Deadlines, Completed Tasks and Analytics
+<p text-align="center">
+  <img src="docs/screenshots/showcase/deadlines.jpeg" alt="Deadlines" width="300"/>
+  <img src="docs/screenshots/showcase/tasks.jpeg" alt="completed-tasks" width="300" />
+  <img src="docs/screenshots/showcase/analytics.jpeg" alt="analytics and weekly reports" width="300" />
 </p>
 
-## Dashboard with Menu
-<p align="center">
-  <p align="center">
-  <img src="docs/screenshots/light-theme/dashboard-with-more-menu-light-theme.jpeg" alt="Dashboard Menu in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/dashboard-with-more-menu-dark-theme.jpeg" alt="Dashboard Menu in Light Theme" width="300"/>
-</p>
-</p>
+## Dark Preview
 
-## Dashboard with Options 
-<p align="center">
-  <img src="docs/screenshots/light-theme/Dashboard-with-option-menu-light-theme.jpeg" alt="Dashboard and Options in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/Dashboard-with-option-menu-dark-theme.jpeg" alt="Dashboard and Options in Light Theme" width="300"/>
-</p>
-
-## Adding Tasks
-<p align="center">
-  <img src="docs/screenshots/light-theme/add-task-screen-light-theme.jpeg" alt="Tasks View in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/add-task-screen-dark-theme.jpeg" alt="Tasks View in Light Theme" width="300"/>
-</p>
-
-## Specifying Time & Date under Tasks
-<p align="center">
-  <img src="docs/screenshots/light-theme/date-selection-light-theme.jpeg" alt="Date Selection under Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/date-selection-dark-theme.jpeg" alt="Date Selection under Dark Theme" width="300"/>
-</p>
-<p align="center">
-  <img src="docs/screenshots/light-theme/time-selection-light-theme.jpeg" alt="" width="300"/>
-  <img src="docs/screenshots/dark-theme/time-selection-dark-theme.jpeg" alt="" width="300"/>
-</p>
-
-## Dashboard After Adding Tasks
-<p align="center">
-  <img src="docs/screenshots/light-theme/Dashboard-with-added-tasks-light-theme.jpg" alt="Dashboard and Tasks in Light Theme" width="300"/>
-  <img src="docs/screenshots/dark-theme/Dashboard-with-added-tasks-dark-theme.jpg" alt="Dashboard and Tasks in Light Theme" width="300"/>
+<p text-align="center">
+  <img src="docs/screenshots/dark-preview/dashboard.jpeg" alt="tasks" width="300" />
+  <img src="docs/screenshots/dark-preview/add-tasks.jpeg" alt="tasks" width="300" />
+  <img src="docs/screenshots/dark-preview/analytics.jpeg" alt="tasks" width="300" />
 </p>
