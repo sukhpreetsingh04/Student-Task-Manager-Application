@@ -403,32 +403,6 @@ fun TaskScreen(modifier: Modifier = Modifier, onSubmit: (String) -> Unit) {
                         }
                     }
                 }
-
-                Spacer(modifier = Modifier.height(30.dp))
-
-//                Button(
-//                    onClick = {
-//                        onSubmit(
-//                            "$description\n$selectedDate • $selectedTime\n${taskList[itemPosition.value]}"
-//                        )
-//                        description = ""
-//                        selectedDate = ""
-//                        selectedTime = ""
-//                        taskList[itemPosition.value] = ""
-//                    },
-//                    modifier = Modifier
-//                        .padding(20.dp)
-//                        .size(48.dp),
-//                    shape = RoundedCornerShape(12.dp),
-//                    colors = ButtonDefaults.buttonColors(
-//                        containerColor = Color(0xFFFFB74D),
-//                        contentColor = MaterialTheme.colorScheme.onPrimary
-//                    ),
-//                ) { Icon(
-//                    imageVector = Icons.Default.AddBox,
-//                    contentDescription = null,
-//                    tint = Color.Black
-//                ) }
             }
         }
     }
