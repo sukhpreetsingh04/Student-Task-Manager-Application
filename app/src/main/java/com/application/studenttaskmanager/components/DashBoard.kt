@@ -52,13 +52,14 @@ fun DashBoard(
     user: User,
     onSubmitTask: (TaskDraft) -> Unit,
     onDeleteTask: (TaskItem) -> Unit,
-    onEditTask: (TaskItem) -> Unit,
+    onUpdateTask: (Long, TaskDraft) -> Unit,
     onToggleTask: (TaskItem) -> Unit,
     onNavigate: (String) -> Unit,
     onLogout: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showTaskDialog by rememberSaveable { mutableStateOf(false) }
+    var editingTask by rememberSaveable { mutableStateOf<TaskItem?>(null) }
     val lightCardColor = Color.White
     val darkCardColor = Color(0xFF2A2A2A)
     val activeTasks = tasks.filterNot { it.isCompleted }
@@ -98,7 +99,10 @@ fun DashBoard(
                         task = task,
                         cardColor = if (isSystemInDarkTheme()) darkCardColor else lightCardColor,
                         onToggleTask = onToggleTask,
-                        onEditTask = onEditTask,
+                        onEditTask = { task ->
+                            editingTask = task
+                            showTaskDialog = true
+                        },
                         onDeleteTask = onDeleteTask
                     )
                 }
@@ -120,11 +124,20 @@ fun DashBoard(
                         )
                     ) {
                         TaskScreen(
-                            onSubmit = { newTask ->
-                                onSubmitTask(newTask)
+                            task = editingTask,
+                            onSubmit = { draft ->
+
+                                editingTask?.let { task ->
+                                    onUpdateTask(task.id, draft)
+                                } ?: onSubmitTask(draft)
+
                                 showTaskDialog = false
+                                editingTask = null
                             },
-                            onCancel = { showTaskDialog = false }
+                            onCancel = {
+                                showTaskDialog = false
+                                editingTask = null
+                            }
                         )
                     }
                 }

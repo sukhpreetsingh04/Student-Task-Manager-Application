@@ -71,6 +71,10 @@ fun Navigation() {
                 DashBoard(
                     tasks = tasks,
                     user = user,
+                    onUpdateTask = { taskId, draft ->
+                        repository.updateTask(taskId, draft)
+                        refreshTasks(user)
+                    },
                     onSubmitTask = { draft ->
                         val savedTask = repository.addTask(user.id, draft)
                         scheduler.schedule(savedTask)
