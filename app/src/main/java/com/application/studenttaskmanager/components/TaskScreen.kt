@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.application.studenttaskmanager.R
 import com.application.studenttaskmanager.data.TaskDraft
+import com.application.studenttaskmanager.data.TaskItem
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -72,6 +73,7 @@ import java.util.TimeZone
 @Composable
 fun TaskScreen(
     modifier: Modifier = Modifier,
+    task: TaskItem? = null,
     onSubmit: (TaskDraft) -> Unit,
     onCancel: () -> Unit
 ) {
@@ -82,11 +84,17 @@ fun TaskScreen(
     val timePickerState = rememberTimePickerState()
     var expanded by rememberSaveable { mutableStateOf(false) }
     val taskList = stringArrayResource(R.array.taskList)
-    val itemPosition = remember { mutableStateOf(0) }
+    val itemPosition = remember(task?.id) {
+        mutableStateOf(
+            taskList.indexOf(task?.category).takeIf { it >= 0 } ?: 0
+        )
+    }
     var selectedTime by rememberSaveable { mutableStateOf("") }
     var selectedDate by rememberSaveable { mutableStateOf("") }
     var selectedDateMillis by rememberSaveable { mutableStateOf<Long?>(null) }
-    var description by rememberSaveable { mutableStateOf("") }
+    var description by rememberSaveable(task?.id) {
+        mutableStateOf(task?.title ?: "")
+    }
 
     val datePickerColors = DatePickerDefaults.colors(
         containerColor = MaterialTheme.colorScheme.surface,
