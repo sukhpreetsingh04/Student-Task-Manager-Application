@@ -18,6 +18,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import com.application.studenttaskmanager.data.TaskStatus
+import com.application.studenttaskmanager.data.getStatus
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -106,9 +108,26 @@ fun SimpleTaskCard(task: TaskItem) {
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
             Text(task.title, fontWeight = FontWeight.Bold, color = Color(0xFFFFB74D))
+            val (statusText, statusColor) = when (task.getStatus()) {
+
+            TaskStatus.PENDING ->
+                "Pending" to Color(0xFF4CAF50)
+
+            TaskStatus.OVERDUE ->
+                "Overdue" to Color(0xFFE53935)
+
+            TaskStatus.COMPLETED_ON_TIME ->
+                "Completed On Time" to Color(0xFF4CAF50)
+
+            TaskStatus.COMPLETED_LATE ->
+                "Completed Late" to Color(0xFFFF9800)
+        }
+
             Text(
-                text = "${task.category}${task.dueAtMillis?.let { " - ${formatDateTime(it)}" } ?: ""}",
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = statusText,
+                color = statusColor,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 13.sp
             )
         }
     }

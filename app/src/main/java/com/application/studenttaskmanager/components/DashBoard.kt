@@ -3,6 +3,8 @@ package com.application.studenttaskmanager.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.foundation.background
+import com.application.studenttaskmanager.data.TaskStatus
+import com.application.studenttaskmanager.data.getStatus
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -226,10 +228,33 @@ private fun TaskRow(
                     else
                         TextDecoration.None
                 )
+
+                val (statusText, statusColor) = when (task.getStatus()) {
+
+                    TaskStatus.PENDING ->
+                        "Pending" to Color(0xFF4CAF50)
+
+                    TaskStatus.OVERDUE ->
+                        "Overdue" to Color(0xFFE53935)
+
+                    TaskStatus.COMPLETED_ON_TIME ->
+                        "Completed On Time" to Color(0xFF4CAF50)
+
+                    TaskStatus.COMPLETED_LATE ->
+                        "Completed Late" to Color(0xFFFF9800)
+                }
+
                 Text(
-                    text = "${task.category}${task.dueAtMillis?.let { " - ${formatDateTime(it)}" } ?: ""}",
+                    text = "${task.category}${task.dueAtMillis?.let { " • ${formatDateTime(it)}" } ?: ""}",
                     fontSize = 13.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
+                Text(
+                    text = statusText,
+                    color = statusColor,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold
                 )
             }
 
