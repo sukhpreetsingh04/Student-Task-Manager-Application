@@ -7,6 +7,7 @@ data class TaskItem(
     val category: String,
     val dueAtMillis: Long?,
     val isCompleted: Boolean = false,
-    val createdAtMillis: Long = System.currentTimeMillis()
+    val createdAtMillis: Long = System.currentTimeMillis(),
+    val completedAtMillis: Long? = null
 )
 

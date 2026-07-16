@@ -30,6 +30,7 @@ class StudentDatabaseHelper(context: Context) :
                 due_at INTEGER,
                 is_completed INTEGER NOT NULL DEFAULT 0,
                 created_at INTEGER NOT NULL,
+                completed_at INTEGER,
                 FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
             )
             """.trimIndent()
@@ -44,7 +45,7 @@ class StudentDatabaseHelper(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "student_task_manager.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
     }
 }
 
