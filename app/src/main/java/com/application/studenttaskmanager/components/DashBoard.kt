@@ -1,6 +1,7 @@
 package com.application.studenttaskmanager.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -51,6 +52,7 @@ fun DashBoard(
     user: User,
     onSubmitTask: (TaskDraft) -> Unit,
     onDeleteTask: (TaskItem) -> Unit,
+    onEditTask: (TaskItem) -> Unit,
     onToggleTask: (TaskItem) -> Unit,
     onNavigate: (String) -> Unit,
     onLogout: () -> Unit,
@@ -96,6 +98,7 @@ fun DashBoard(
                         task = task,
                         cardColor = if (isSystemInDarkTheme()) darkCardColor else lightCardColor,
                         onToggleTask = onToggleTask,
+                        onEditTask = onEditTask,
                         onDeleteTask = onDeleteTask
                     )
                 }
@@ -165,6 +168,7 @@ private fun TaskRow(
     task: TaskItem,
     cardColor: Color,
     onToggleTask: (TaskItem) -> Unit,
+    onEditTask: (TaskItem) -> Unit,
     onDeleteTask: (TaskItem) -> Unit
 ) {
     Card(
@@ -216,12 +220,27 @@ private fun TaskRow(
                 )
             }
 
-            IconButton(onClick = { onDeleteTask(task) }) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete Task",
-                    tint = MaterialTheme.colorScheme.error
-                )
+            Row {
+
+                IconButton(
+                    onClick = { onEditTask(task) }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit Task",
+                        tint = Color(0xFFFFB74D)
+                    )
+                }
+
+                IconButton(
+                    onClick = { onDeleteTask(task) }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete Task",
+                        tint = MaterialTheme.colorScheme.error
+                    )
+                }
             }
         }
     }
