@@ -112,6 +112,26 @@ class StudentRepository(context: Context) {
         return getTaskById(id) ?: error("Task was not saved")
     }
 
+    fun updateTask(taskId: Long, draft: TaskDraft) {
+        val values = ContentValues().apply {
+            put("title", draft.title.trim())
+            put("category", draft.category)
+
+            if (draft.dueAtMillis != null) {
+                put("due_at", draft.dueAtMillis)
+            } else {
+                putNull("due_at")
+            }
+        }
+
+        dbHelper.writableDatabase.update(
+            "tasks",
+            values,
+            "id = ?",
+            arrayOf(taskId.toString())
+        )
+    }
+
     fun setTaskCompleted(taskId: Long, completed: Boolean) {
         val values = ContentValues().apply {
             put("is_completed", if (completed) 1 else 0)
