@@ -80,8 +80,21 @@ fun TaskScreen(
     val context = LocalContext.current
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
     var showTimePicker by rememberSaveable { mutableStateOf(false) }
-    val datePickerState = rememberDatePickerState()
-    val timePickerState = rememberTimePickerState()
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = task?.dueAtMillis
+    )
+    val calendar = remember(task?.id) {
+        Calendar.getInstance().apply {
+            task?.dueAtMillis?.let {
+                timeInMillis = it
+            }
+        }
+    }
+
+    val timePickerState = rememberTimePickerState(
+        initialHour = calendar.get(Calendar.HOUR_OF_DAY),
+        initialMinute = calendar.get(Calendar.MINUTE)
+    )
     var expanded by rememberSaveable { mutableStateOf(false) }
     val taskList = stringArrayResource(R.array.taskList)
     val itemPosition = remember(task?.id) {
@@ -89,9 +102,29 @@ fun TaskScreen(
             taskList.indexOf(task?.category).takeIf { it >= 0 } ?: 0
         )
     }
-    var selectedTime by rememberSaveable { mutableStateOf("") }
-    var selectedDate by rememberSaveable { mutableStateOf("") }
-    var selectedDateMillis by rememberSaveable { mutableStateOf<Long?>(null) }
+    var selectedTime by rememberSaveable(task?.id) {
+        mutableStateOf(
+            task?.dueAtMillis?.let {
+                SimpleDateFormat(
+                    "HH:mm",
+                    Locale.getDefault()
+                ).format(Date(it))
+            } ?: ""
+        )
+    }
+    var selectedDate by rememberSaveable(task?.id) {
+        mutableStateOf(
+            task?.dueAtMillis?.let {
+                SimpleDateFormat(
+                    "dd/MM/yyyy",
+                    Locale.getDefault()
+                ).format(Date(it))
+            } ?: ""
+        )
+    }
+    var selectedDateMillis by rememberSaveable(task?.id) {
+        mutableStateOf(task?.dueAtMillis)
+    }
     var description by rememberSaveable(task?.id) {
         mutableStateOf(task?.title ?: "")
     }
