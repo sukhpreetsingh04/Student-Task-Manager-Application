@@ -79,7 +79,7 @@ class StudentRepository(context: Context) {
 
         db.rawQuery(
             """
-            SELECT id, user_id, title, category, due_at, is_completed, created_at
+            SELECT id, user_id, title, category, due_at, is_completed, created_at, completed_at
             FROM tasks
             WHERE user_id = ?
             ORDER BY is_completed ASC, COALESCE(due_at, created_at) ASC
@@ -134,7 +134,14 @@ class StudentRepository(context: Context) {
 
     fun setTaskCompleted(taskId: Long, completed: Boolean) {
         val values = ContentValues().apply {
+
             put("is_completed", if (completed) 1 else 0)
+
+            if (completed) {
+                put("completed_at", System.currentTimeMillis())
+            } else {
+                putNull("completed_at")
+            }
         }
         dbHelper.writableDatabase.update(
             "tasks",
@@ -169,7 +176,7 @@ class StudentRepository(context: Context) {
     private fun getTaskById(taskId: Long): TaskItem? {
         dbHelper.readableDatabase.rawQuery(
             """
-            SELECT id, user_id, title, category, due_at, is_completed, created_at
+            SELECT id, user_id, title, category, due_at, is_completed, created_at, completed_at
             FROM tasks
             WHERE id = ?
             """.trimIndent(),
@@ -182,6 +189,7 @@ class StudentRepository(context: Context) {
 
     private fun android.database.Cursor.toTaskItem(): TaskItem {
         val dueColumn = getColumnIndexOrThrow("due_at")
+        val completedColumn = getColumnIndexOrThrow("completed_at")
         return TaskItem(
             id = getLong(getColumnIndexOrThrow("id")),
             userId = getLong(getColumnIndexOrThrow("user_id")),
@@ -189,7 +197,12 @@ class StudentRepository(context: Context) {
             category = getString(getColumnIndexOrThrow("category")),
             dueAtMillis = if (isNull(dueColumn)) null else getLong(dueColumn),
             isCompleted = getInt(getColumnIndexOrThrow("is_completed")) == 1,
-            createdAtMillis = getLong(getColumnIndexOrThrow("created_at"))
+            createdAtMillis = getLong(getColumnIndexOrThrow("created_at")),
+            completedAtMillis =
+                if (isNull(completedColumn))
+                    null
+                else
+                    getLong(completedColumn)
         )
     }
 
