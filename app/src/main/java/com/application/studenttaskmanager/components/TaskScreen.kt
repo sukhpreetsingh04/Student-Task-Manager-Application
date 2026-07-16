@@ -210,7 +210,10 @@ fun TaskScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "New Task", color = Color(0xFFFFB74D))
+                    Text(
+                        text = if (task == null) "New Task" else "Edit Task",
+                        color = Color(0xFFFFB74D)
+                    )
                 },
                 navigationIcon = {
                     IconButton(onClick = onCancel) {
