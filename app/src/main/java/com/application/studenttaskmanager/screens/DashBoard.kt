@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material.icons.filled.Edit
@@ -38,12 +38,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.application.studenttaskmanager.data.TaskDraft
 import com.application.studenttaskmanager.data.TaskItem
 import com.application.studenttaskmanager.data.User
+import com.application.studenttaskmanager.ui.theme.StudentTaskManagerTheme
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -66,7 +68,7 @@ fun DashBoard(
     val darkCardColor = Color(0xFF2A2A2A)
     val activeTasks = tasks.filterNot { it.isCompleted }
 
-    TopApplicationBar(
+    _root_ide_package_.com.application.studenttaskmanager.components.TopApplicationBar(
         onMenuItemSelected = { item ->
             when (item) {
                 "All Tasks" -> onNavigate("DashBoard")
@@ -114,7 +116,9 @@ fun DashBoard(
                 EmptyTaskState(userName = user.name)
             }
 
-            TaskCard(onClick = { showTaskDialog = true })
+            _root_ide_package_.com.application.studenttaskmanager.components.TaskCard(onClick = {
+                showTaskDialog = true
+            })
 
             if (showTaskDialog) {
                 Dialog(onDismissRequest = { showTaskDialog = false }) {
@@ -317,5 +321,47 @@ private fun EmptyTaskState(userName: String) {
 
 fun formatDateTime(millis: Long): String {
     return SimpleDateFormat("dd MMM, hh:mm a", Locale.getDefault()).format(Date(millis))
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DashBoardPreview() {
+    StudentTaskManagerTheme {
+        DashBoard(
+            tasks = listOf(
+                TaskItem(
+                    id = 1,
+                    userId = 1,
+                    title = "Finish Homework",
+                    category = "Study",
+                    dueAtMillis = System.currentTimeMillis() + 86400000,
+                    isCompleted = false
+                ),
+                TaskItem(
+                    id = 2,
+                    userId = 1,
+                    title = "Buy Groceries",
+                    category = "Personal",
+                    dueAtMillis = System.currentTimeMillis() - 86400000,
+                    isCompleted = false
+                ),
+                TaskItem(
+                    id = 3,
+                    userId = 1,
+                    title = "Gym Session",
+                    category = "Health",
+                    dueAtMillis = null,
+                    isCompleted = true
+                )
+            ),
+            user = User(1, "John Doe", "john@example.com"),
+            onSubmitTask = {},
+            onDeleteTask = {},
+            onUpdateTask = { _, _ -> },
+            onToggleTask = {},
+            onNavigate = {},
+            onLogout = {}
+        )
+    }
 }
 

@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.BorderStroke

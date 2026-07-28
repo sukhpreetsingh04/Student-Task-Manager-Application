@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.application.studenttaskmanager.components.Navigation
+import com.application.studenttaskmanager.navigation.Navigation
 import com.application.studenttaskmanager.ui.theme.StudentTaskManagerTheme
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.screens
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

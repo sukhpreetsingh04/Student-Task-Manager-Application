@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.screens
 
 import android.annotation.SuppressLint
 import android.widget.Toast

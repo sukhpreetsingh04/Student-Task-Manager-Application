@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,10 +11,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.application.studenttaskmanager.screens.UserAuthentication
 import com.application.studenttaskmanager.data.StudentRepository
 import com.application.studenttaskmanager.data.TaskItem
 import com.application.studenttaskmanager.data.User
 import com.application.studenttaskmanager.notifications.TaskNotificationScheduler
+import com.application.studenttaskmanager.screens.AnalyticsScreen
+import com.application.studenttaskmanager.screens.CompletedTasksScreen
+import com.application.studenttaskmanager.screens.DashBoard
+import com.application.studenttaskmanager.screens.DeadLineScreen
 
 @Composable
 fun Navigation() {
