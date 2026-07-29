@@ -1,62 +1,41 @@
 package com.application.studenttaskmanager.screens
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.foundation.background
-import com.application.studenttaskmanager.data.TaskStatus
-import com.application.studenttaskmanager.data.getStatus
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.outlined.RadioButtonUnchecked
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.application.studenttaskmanager.data.TaskDraft
+import com.application.studenttaskmanager.components.DashboardSummary
+import com.application.studenttaskmanager.components.DialogCard
+import com.application.studenttaskmanager.components.EmptyTaskState
+import com.application.studenttaskmanager.components.TaskRow
 import com.application.studenttaskmanager.data.TaskItem
 import com.application.studenttaskmanager.data.User
 import com.application.studenttaskmanager.ui.theme.StudentTaskManagerTheme
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.application.studenttaskmanager.components.TopApplicationBar
+import com.application.studenttaskmanager.components.TaskCard
+import com.application.studenttaskmanager.data.TaskDraft
 
 @Composable
 fun DashBoard(
     tasks: List<TaskItem>,
     user: User,
+    onUpdateTask: (Long, TaskDraft) -> Unit,
     onSubmitTask: (TaskDraft) -> Unit,
     onDeleteTask: (TaskItem) -> Unit,
-    onUpdateTask: (Long, TaskDraft) -> Unit,
     onToggleTask: (TaskItem) -> Unit,
     onNavigate: (String) -> Unit,
     onLogout: () -> Unit,
@@ -68,7 +47,7 @@ fun DashBoard(
     val darkCardColor = Color(0xFF2A2A2A)
     val activeTasks = tasks.filterNot { it.isCompleted }
 
-    _root_ide_package_.com.application.studenttaskmanager.components.TopApplicationBar(
+    TopApplicationBar(
         onMenuItemSelected = { item ->
             when (item) {
                 "All Tasks" -> onNavigate("DashBoard")
@@ -116,252 +95,78 @@ fun DashBoard(
                 EmptyTaskState(userName = user.name)
             }
 
-            _root_ide_package_.com.application.studenttaskmanager.components.TaskCard(onClick = {
+            TaskCard(onClick = {
                 showTaskDialog = true
             })
 
             if (showTaskDialog) {
                 Dialog(onDismissRequest = { showTaskDialog = false }) {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.background
-                        )
-                    ) {
-                        TaskScreen(
-                            task = editingTask,
-                            onSubmit = { draft ->
-
-                                editingTask?.let { task ->
-                                    onUpdateTask(task.id, draft)
-                                } ?: onSubmitTask(draft)
-
-                                showTaskDialog = false
-                                editingTask = null
-                            },
-                            onCancel = {
-                                showTaskDialog = false
-                                editingTask = null
-                            }
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun DashboardSummary(tasks: List<TaskItem>, userName: String) {
-    val completed = tasks.count { it.isCompleted }
-    val pending = tasks.size - completed
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 12.dp),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Hello, $userName",
-                color = Color(0xFFFFB74D),
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 22.sp
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "$pending pending - $completed completed",
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Medium
-            )
-        }
-    }
-}
-
-@Composable
-private fun TaskRow(
-    task: TaskItem,
-    cardColor: Color,
-    onToggleTask: (TaskItem) -> Unit,
-    onEditTask: (TaskItem) -> Unit,
-    onDeleteTask: (TaskItem) -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = cardColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = { onToggleTask(task) }) {
-                Icon(
-                    imageVector = if (task.isCompleted)
-                        Icons.Default.CheckCircle
-                    else
-                        Icons.Outlined.RadioButtonUnchecked,
-                    contentDescription = "Complete Task",
-                    tint = Color(0xFFFFB74D)
-                )
-            }
-
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 8.dp)
-            ) {
-                Text(
-                    text = task.title,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = Color(0xFFFFB74D),
-                    textDecoration = if (task.isCompleted)
-                        TextDecoration.LineThrough
-                    else
-                        TextDecoration.None
-                )
-
-                val (statusText, statusColor) = when (task.getStatus()) {
-
-                    TaskStatus.PENDING ->
-                        "Pending" to Color(0xFF4CAF50)
-
-                    TaskStatus.OVERDUE ->
-                        "Overdue" to Color(0xFFE53935)
-
-                    TaskStatus.COMPLETED_ON_TIME ->
-                        "Completed On Time" to Color(0xFF4CAF50)
-
-                    TaskStatus.COMPLETED_LATE ->
-                        "Completed Late" to Color(0xFFFF9800)
-                }
-
-                Text(
-                    text = "${task.category}${task.dueAtMillis?.let { " • ${formatDateTime(it)}" } ?: ""}",
-                    fontSize = 13.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-
-                Text(
-                    text = statusText,
-                    color = statusColor,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-
-            Row {
-
-                IconButton(
-                    onClick = { onEditTask(task) }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "Edit Task",
-                        tint = Color(0xFFFFB74D)
-                    )
-                }
-
-                IconButton(
-                    onClick = { onDeleteTask(task) }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete Task",
-                        tint = MaterialTheme.colorScheme.error
+                    DialogCard(
+                        task = editingTask,
+                        onSubmitTask = { draft ->
+                            // Add new task
+                        },
+                        onUpdateTask = { id, draft ->
+                            // Update existing task
+                        },
+                        onDismiss = {
+                            showTaskDialog = false
+                            editingTask = null
+                        }
                     )
                 }
             }
         }
     }
-}
-
-@Composable
-private fun EmptyTaskState(userName: String) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Hello, $userName",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFFFFB74D)
-        )
-
-        Text(
-            text = "Ready to tackle today's tasks?",
-            fontSize = 16.sp,
-            color = Color(0xFFFFB74D)
-        )
-
-        Spacer(modifier = Modifier.height(14.dp))
-
-        Text(
-            text = "No tasks yet.\nTap + to add one.",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.ExtraBold,
-            color = Color(0xFFFFB74D)
-        )
-    }
-}
-
-fun formatDateTime(millis: Long): String {
-    return SimpleDateFormat("dd MMM, hh:mm a", Locale.getDefault()).format(Date(millis))
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DashBoardPreview() {
+
+    val previewTask = listOf(
+        TaskItem(
+            id = 1,
+            userId = 1,
+            title = "Finish Homework",
+            category = "Study",
+            dueAtMillis = System.currentTimeMillis() + 86400000,
+            isCompleted = false
+        ),
+        TaskItem(
+            id = 2,
+            userId = 1,
+            title = "Buy Groceries",
+            category = "Personal",
+            dueAtMillis = System.currentTimeMillis() - 86400000,
+            isCompleted = false
+        ),
+        TaskItem(
+            id = 3,
+            userId = 1,
+            title = "Gym Session",
+            category = "Health",
+            dueAtMillis = null,
+            isCompleted = true
+        )
+    )
+
+    val previewUser = User(
+        id = 1,
+        name = "John Doe",
+        email = "john@example.com"
+    )
+
     StudentTaskManagerTheme {
         DashBoard(
-            tasks = listOf(
-                TaskItem(
-                    id = 1,
-                    userId = 1,
-                    title = "Finish Homework",
-                    category = "Study",
-                    dueAtMillis = System.currentTimeMillis() + 86400000,
-                    isCompleted = false
-                ),
-                TaskItem(
-                    id = 2,
-                    userId = 1,
-                    title = "Buy Groceries",
-                    category = "Personal",
-                    dueAtMillis = System.currentTimeMillis() - 86400000,
-                    isCompleted = false
-                ),
-                TaskItem(
-                    id = 3,
-                    userId = 1,
-                    title = "Gym Session",
-                    category = "Health",
-                    dueAtMillis = null,
-                    isCompleted = true
-                )
-            ),
-            user = User(1, "John Doe", "john@example.com"),
-            onSubmitTask = {},
-            onDeleteTask = {},
+            tasks = previewTask,
+            user = previewUser,
             onUpdateTask = { _, _ -> },
+            onSubmitTask = { },
+            onDeleteTask = {},
             onToggleTask = {},
             onNavigate = {},
             onLogout = {}
         )
     }
 }
-
