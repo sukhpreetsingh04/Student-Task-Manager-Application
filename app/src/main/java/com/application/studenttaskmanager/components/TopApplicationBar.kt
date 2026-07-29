@@ -25,10 +25,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import com.application.studenttaskmanager.data.rememberTopAppState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,29 +38,7 @@ fun TopApplicationBar(
     content: @Composable (PaddingValues) -> Unit
 ) {
 
-    val menuStatus = rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    val moreStatus = rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    val menuItems = listOf(
-        "All Tasks",
-        "WishList",
-        "Filter",
-        "Sort",
-        "Settings",
-        "Logout"
-    )
-
-    val moreItems = listOf(
-        "Personal",
-        "DeadLines",
-        "Your Progress",
-        "Analytics and Weekly Reports"
-    )
+    val topState = rememberTopAppState()
 
     var isSearching by remember { mutableStateOf(false) }
 
@@ -106,55 +84,75 @@ fun TopApplicationBar(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { menuStatus.value = true }) {
+                    IconButton(
+                        onClick = { topState.menuStatus.value = true }
+                    ) {
                         Icon(
                             Icons.Filled.Menu,
                             contentDescription = "Menu Icon"
                         )
+
                         DropdownMenu(
                             containerColor = MaterialTheme.colorScheme.surface,
-                            expanded = menuStatus.value,
-                            onDismissRequest = { menuStatus.value = false }) {
-                            menuItems.forEach {
-                                DropdownMenuItem(text = {
-                                    Text(
-                                        text = it,
-                                        color = Color(0xFFFFB74D)
-                                    )
-                                }, onClick = {
-                                    menuStatus.value = false
-                                    onMenuItemSelected(it)
-                                })
+                            expanded = topState.menuStatus.value,
+                            onDismissRequest = {
+                                topState.menuStatus.value = false
+                            }
+                        ) {
+                            topState.menuItems.forEach {
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            text = it,
+                                            color = Color(0xFFFFB74D)
+                                        )
+                                    },
+                                    onClick = {
+                                        topState.menuStatus.value = false
+                                        onMenuItemSelected(it)
+                                    }
+                                )
                             }
                         }
                     }
 
-                    IconButton(onClick = { isSearching = !isSearching }) {
+                    IconButton(
+                        onClick = { isSearching = !isSearching }
+                    ) {
                         Icon(
                             Icons.Filled.Search,
                             contentDescription = "Search icon"
                         )
                     }
 
-                    IconButton(onClick = { moreStatus.value = true }) {
+                    IconButton(
+                        onClick = { topState.moreStatus.value = true }
+                    ) {
                         Icon(
                             Icons.Filled.MoreVert,
                             contentDescription = "More icon"
                         )
+
                         DropdownMenu(
                             containerColor = MaterialTheme.colorScheme.surface,
-                            expanded = moreStatus.value,
-                            onDismissRequest = { moreStatus.value = false }) {
-                            moreItems.forEach {
-                                DropdownMenuItem(text = {
-                                    Text(
-                                        text = it,
-                                        color = Color(0xFFFFB74D)
-                                    )
-                                }, onClick = {
-                                    moreStatus.value = false
-                                    onMoreItemSelected(it)
-                                })
+                            expanded = topState.moreStatus.value,
+                            onDismissRequest = {
+                                topState.moreStatus.value = false
+                            }
+                        ) {
+                            topState.moreItems.forEach {
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            text = it,
+                                            color = Color(0xFFFFB74D)
+                                        )
+                                    },
+                                    onClick = {
+                                        topState.moreStatus.value = false
+                                        onMoreItemSelected(it)
+                                    }
+                                )
                             }
                         }
                     }
