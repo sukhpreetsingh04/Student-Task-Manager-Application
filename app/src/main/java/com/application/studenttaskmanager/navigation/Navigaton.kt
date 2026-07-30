@@ -12,9 +12,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.application.studenttaskmanager.screens.UserAuthentication
-import com.application.studenttaskmanager.data.StudentRepository
 import com.application.studenttaskmanager.data.TaskItem
+import com.application.studenttaskmanager.data.TaskQueries
 import com.application.studenttaskmanager.data.User
+import com.application.studenttaskmanager.data.UserRepository
 import com.application.studenttaskmanager.notifications.TaskNotificationScheduler
 import com.application.studenttaskmanager.screens.AnalyticsScreen
 import com.application.studenttaskmanager.screens.CompletedTasksScreen
@@ -24,16 +25,19 @@ import com.application.studenttaskmanager.screens.DeadLineScreen
 @Composable
 fun Navigation() {
     val context = LocalContext.current
-    val repository = remember { StudentRepository(context) }
+    val userRepository = remember { UserRepository(context) }
+    val taskQueries = remember { TaskQueries(context) }
     val scheduler = remember { TaskNotificationScheduler(context) }
     val navController = rememberNavController()
     val tasks = remember { mutableStateListOf<TaskItem>() }
-    var currentUser by remember { mutableStateOf(repository.currentUser()) }
+    var currentUser by remember {
+        mutableStateOf(userRepository.currentUser())
+    }
 
     fun refreshTasks(user: User?) {
         tasks.clear()
         if (user != null) {
-            tasks.addAll(repository.tasksForUser(user.id))
+            tasks.addAll(taskQueries.tasksForUser(user.id))
         }
     }
 
@@ -54,8 +58,8 @@ fun Navigation() {
     ) {
         composable("UserAuthentication") {
             UserAuthentication(
-                onLogin = repository::login,
-                onRegister = repository::register,
+                onLogin = userRepository::login,
+                onRegister = userRepository::register,
                 onAuthenticated = { user ->
                     currentUser = user
                     refreshTasks(user)
@@ -77,21 +81,21 @@ fun Navigation() {
                     tasks = tasks,
                     user = user,
                     onUpdateTask = { taskId, draft ->
-                        repository.updateTask(taskId, draft)
+                        taskQueries.updateTask(taskId, draft)
                         refreshTasks(user)
                     },
                     onSubmitTask = { draft ->
-                        val savedTask = repository.addTask(user.id, draft)
+                        val savedTask = taskQueries.addTask(user.id, draft)
                         scheduler.schedule(savedTask)
                         refreshTasks(user)
                     },
                     onDeleteTask = { task ->
                         scheduler.cancel(task.id)
-                        repository.deleteTask(task.id)
+                        taskQueries.deleteTask(task.id)
                         refreshTasks(user)
                     },
                     onToggleTask = { task ->
-                        repository.setTaskCompleted(task.id, !task.isCompleted)
+                        taskQueries.setTaskCompleted(task.id, !task.isCompleted)
                         if (!task.isCompleted) {
                             scheduler.cancel(task.id)
                         } else {
@@ -105,7 +109,7 @@ fun Navigation() {
                         }
                     },
                     onLogout = {
-                        repository.logout()
+                        userRepository.logout()
                         currentUser = null
                         tasks.clear()
                         navController.navigate("UserAuthentication") {

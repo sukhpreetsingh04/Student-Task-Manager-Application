@@ -5,6 +5,7 @@ data class TaskItem(
     val userId: Long,
     val title: String,
     val category: String,
+    val description: String,
     val dueAtMillis: Long?,
     val isCompleted: Boolean = false,
     val createdAtMillis: Long = System.currentTimeMillis(),

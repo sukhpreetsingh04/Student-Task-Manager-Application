@@ -45,10 +45,11 @@ fun TaskScreen(
 ) {
     val context = LocalContext.current
 
-    var draft by remember {
+    var draft by remember(task?.id) {
         mutableStateOf(
             TaskDraft(
                 title = task?.title ?: "",
+                description = task?.description ?: "",
                 category = task?.category ?: "",
                 dueAtMillis = task?.dueAtMillis
             )

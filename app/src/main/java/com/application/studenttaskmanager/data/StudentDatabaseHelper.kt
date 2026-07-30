@@ -26,6 +26,7 @@ class StudentDatabaseHelper(context: Context) :
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER NOT NULL,
                 title TEXT NOT NULL,
+                description TEXT,
                 category TEXT NOT NULL,
                 due_at INTEGER,
                 is_completed INTEGER NOT NULL DEFAULT 0,
@@ -37,15 +38,25 @@ class StudentDatabaseHelper(context: Context) :
         )
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS tasks")
-        db.execSQL("DROP TABLE IF EXISTS users")
-        onCreate(db)
+    override fun onUpgrade(
+        db: SQLiteDatabase,
+        oldVersion: Int,
+        newVersion: Int
+    ) {
+
+        if (oldVersion < 3) {
+            db.execSQL(
+                """
+            ALTER TABLE tasks
+            ADD COLUMN description TEXT DEFAULT ''
+            """.trimIndent()
+            )
+        }
     }
 
     companion object {
         private const val DATABASE_NAME = "student_task_manager.db"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
     }
 }
 
