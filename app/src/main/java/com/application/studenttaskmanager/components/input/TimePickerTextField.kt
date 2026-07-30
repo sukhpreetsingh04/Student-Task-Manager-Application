@@ -28,7 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.application.studenttaskmanager.data.TaskDraft
-import com.application.studenttaskmanager.ui.Design.AppTextFieldColors
+import com.application.studenttaskmanager.ui.design.AppTextFieldColors
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

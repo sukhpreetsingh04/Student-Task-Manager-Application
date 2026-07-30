@@ -28,7 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.application.studenttaskmanager.data.rememberTopAppState
-import com.application.studenttaskmanager.ui.Design.AppTextFieldColors
+import com.application.studenttaskmanager.ui.design.AppTextFieldColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

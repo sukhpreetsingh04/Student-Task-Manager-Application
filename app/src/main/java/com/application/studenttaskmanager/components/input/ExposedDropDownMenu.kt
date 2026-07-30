@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
 import com.application.studenttaskmanager.R
 import com.application.studenttaskmanager.data.TaskDraft
-import com.application.studenttaskmanager.ui.Design.AppTextFieldColors
+import com.application.studenttaskmanager.ui.design.AppTextFieldColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

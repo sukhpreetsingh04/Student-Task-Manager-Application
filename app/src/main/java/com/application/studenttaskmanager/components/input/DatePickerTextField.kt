@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Icon
@@ -23,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.application.studenttaskmanager.data.TaskDraft
-import com.application.studenttaskmanager.ui.Design.AppTextFieldColors
+import com.application.studenttaskmanager.ui.design.AppTextFieldColors
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -78,6 +79,9 @@ fun DatePickerTextField(
             },
             confirmButton = {
                 TextButton(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFB74D)
+                    ),
                     onClick = {
                         onDraftChange(
                             draft.copy(
@@ -92,6 +96,9 @@ fun DatePickerTextField(
             },
             dismissButton = {
                 TextButton(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFB74D)
+                    ),
                     onClick = {
                         showDatePicker = false
                     }
@@ -100,7 +107,7 @@ fun DatePickerTextField(
                 }
             }
         ) {
-            DatePicker(state = datePickerState)
+            DatePicker(state = datePickerState, colors = AppTextFieldColors.colors())
         }
     }
 }
