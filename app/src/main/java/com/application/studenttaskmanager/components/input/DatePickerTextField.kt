@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.components.input
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.application.studenttaskmanager.data.TaskDraft
+import com.application.studenttaskmanager.ui.Design.AppTextFieldColors
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -30,20 +33,6 @@ fun DatePickerTextField(
     draft: TaskDraft,
     onDraftChange: (TaskDraft) -> Unit
 ) {
-
-    val outLinedTextFieldColors = TextFieldDefaults.colors(
-        focusedContainerColor = MaterialTheme.colorScheme.surface,
-        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-        focusedTextColor = MaterialTheme.colorScheme.onSurface,
-        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-        focusedIndicatorColor = Color(0xFFFFB74D),
-        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-        cursorColor = Color(0xFFFFB74D),
-        focusedLabelColor = Color(0xFFFFB74D),
-        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
-    )
 
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
 
@@ -63,7 +52,7 @@ fun DatePickerTextField(
             value = selectedDate,
             onValueChange = {},
             readOnly = true,
-            colors = outLinedTextFieldColors,
+            colors = AppTextFieldColors.default(),
             label = { Text("Not Set") },
             shape = RoundedCornerShape(12.dp),
             trailingIcon = {
@@ -77,5 +66,41 @@ fun DatePickerTextField(
             },
             modifier = Modifier.fillMaxWidth()
         )
+    }
+
+    if (showDatePicker) {
+
+        val datePickerState = rememberDatePickerState()
+
+        DatePickerDialog(
+            onDismissRequest = {
+                showDatePicker = false
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onDraftChange(
+                            draft.copy(
+                                dueAtMillis = datePickerState.selectedDateMillis
+                            )
+                        )
+                        showDatePicker = false
+                    }
+                ) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showDatePicker = false
+                    }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
     }
 }

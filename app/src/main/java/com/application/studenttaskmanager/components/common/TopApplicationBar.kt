@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.components.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,7 +20,6 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.application.studenttaskmanager.data.rememberTopAppState
+import com.application.studenttaskmanager.ui.Design.AppTextFieldColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,22 +44,6 @@ fun TopApplicationBar(
 
     var searchQuery by remember { mutableStateOf("") }
 
-    val topBarSearchFieldColor = TextFieldDefaults.colors(
-        focusedContainerColor = Color.Transparent,
-        unfocusedContainerColor = Color.Transparent,
-        focusedTextColor = MaterialTheme.colorScheme.onSurface,
-        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-        cursorColor = Color(0xFFFFB74D),
-        focusedIndicatorColor = Color.Transparent,
-        unfocusedIndicatorColor = Color.Transparent,
-        disabledIndicatorColor = Color.Transparent,
-        focusedLabelColor = Color(0xFFFFB74D),
-        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
-    )
-
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -71,7 +55,7 @@ fun TopApplicationBar(
                             placeholder = { Text("Search...") },
                             modifier = Modifier.fillMaxWidth(),
                             singleLine = true,
-                            colors = topBarSearchFieldColor
+                            colors = AppTextFieldColors.topBarSearch()
                         )
                     } else {
                         Column {

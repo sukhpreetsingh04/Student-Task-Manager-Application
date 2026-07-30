@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.components.task
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -8,6 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.application.studenttaskmanager.components.input.DatePickerTextField
+import com.application.studenttaskmanager.components.input.DescriptionTextField
+import com.application.studenttaskmanager.components.input.ExposedDropDownMenu
+import com.application.studenttaskmanager.components.input.TimePickerTextField
 import com.application.studenttaskmanager.data.TaskDraft
 
 @Composable

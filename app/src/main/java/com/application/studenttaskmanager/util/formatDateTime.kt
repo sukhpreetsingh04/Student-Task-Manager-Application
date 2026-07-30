@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.util
 
 import java.text.SimpleDateFormat
 import java.util.Date

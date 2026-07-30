@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.components.task
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.application.studenttaskmanager.util.formatDateTime
 import com.application.studenttaskmanager.data.TaskItem
 import com.application.studenttaskmanager.data.TaskStatus
 import com.application.studenttaskmanager.data.getStatus

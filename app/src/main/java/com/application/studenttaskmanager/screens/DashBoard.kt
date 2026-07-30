@@ -18,15 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.application.studenttaskmanager.components.DashboardSummary
-import com.application.studenttaskmanager.components.DialogCard
-import com.application.studenttaskmanager.components.EmptyTaskState
-import com.application.studenttaskmanager.components.TaskRow
+import com.application.studenttaskmanager.components.task.DashboardSummary
+import com.application.studenttaskmanager.components.common.DialogCard
+import com.application.studenttaskmanager.components.task.EmptyTaskState
+import com.application.studenttaskmanager.components.task.TaskRow
 import com.application.studenttaskmanager.data.TaskItem
 import com.application.studenttaskmanager.data.User
 import com.application.studenttaskmanager.ui.theme.StudentTaskManagerTheme
-import com.application.studenttaskmanager.components.TopApplicationBar
-import com.application.studenttaskmanager.components.TaskCard
+import com.application.studenttaskmanager.components.common.TopApplicationBar
+import com.application.studenttaskmanager.components.task.TaskCard
 import com.application.studenttaskmanager.data.TaskDraft
 
 @Composable

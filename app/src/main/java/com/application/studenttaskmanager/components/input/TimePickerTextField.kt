@@ -1,4 +1,4 @@
-package com.application.studenttaskmanager.components
+package com.application.studenttaskmanager.components.input
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -16,21 +16,19 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerDefaults
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.application.studenttaskmanager.data.TaskDraft
-import com.application.studenttaskmanager.data.TaskItem
+import com.application.studenttaskmanager.ui.Design.AppTextFieldColors
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -40,31 +38,15 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimePickerTextField(
-    task: TaskItem? = null, draft: TaskDraft,
+    draft: TaskDraft,
     onDraftChange: (TaskDraft) -> Unit
 ) {
 
-    val outLinedTextFieldColors = TextFieldDefaults.colors(
-        focusedContainerColor = MaterialTheme.colorScheme.surface,
-        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-        focusedTextColor = MaterialTheme.colorScheme.onSurface,
-        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-        focusedIndicatorColor = Color(0xFFFFB74D),
-        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-        cursorColor = Color(0xFFFFB74D),
-        focusedLabelColor = Color(0xFFFFB74D),
-        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
-    )
-
     var showTimePicker by rememberSaveable { mutableStateOf(false) }
 
-    val calendar = remember(task?.id) {
-        Calendar.getInstance().apply {
-            task?.dueAtMillis?.let {
-                timeInMillis = it
-            }
+    val calendar = Calendar.getInstance().apply {
+        draft.dueAtMillis?.let {
+            timeInMillis = it
         }
     }
 
@@ -73,11 +55,9 @@ fun TimePickerTextField(
         initialMinute = calendar.get(Calendar.MINUTE)
     )
 
-    var selectedTime = draft.dueAtMillis?.let {
-        SimpleDateFormat(
-            "HH:mm",
-            Locale.getDefault()
-        ).format(Date(it))
+    val selectedTime = draft.dueAtMillis?.let {
+        SimpleDateFormat("HH:mm", Locale.getDefault())
+            .format(Date(it))
     } ?: ""
 
     if (showTimePicker) {
@@ -90,11 +70,21 @@ fun TimePickerTextField(
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     ),
                     onClick = {
-                        selectedTime = String.format(
-                            "%02d:%02d",
-                            timePickerState.hour,
-                            timePickerState.minute
+                        val calendar = Calendar.getInstance().apply {
+                            draft.dueAtMillis?.let { timeInMillis = it }
+
+                            set(Calendar.HOUR_OF_DAY, timePickerState.hour)
+                            set(Calendar.MINUTE, timePickerState.minute)
+                            set(Calendar.SECOND, 0)
+                            set(Calendar.MILLISECOND, 0)
+                        }
+
+                        onDraftChange(
+                            draft.copy(
+                                dueAtMillis = calendar.timeInMillis
+                            )
                         )
+
                         showTimePicker = false
                     }
                 ) { Text("OK") }
@@ -129,7 +119,7 @@ fun TimePickerTextField(
         value = selectedTime,
         onValueChange = {},
         readOnly = true,
-        colors = outLinedTextFieldColors,
+        colors = AppTextFieldColors.default(),
         label = { Text("Not Set") },
         shape = RoundedCornerShape(12.dp),
         trailingIcon = {
