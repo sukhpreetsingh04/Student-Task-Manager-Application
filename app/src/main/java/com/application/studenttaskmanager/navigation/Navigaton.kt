@@ -58,8 +58,7 @@ fun Navigation() {
     ) {
         composable("UserAuthentication") {
             UserAuthentication(
-                onLogin = userRepository::login,
-                onRegister = userRepository::register,
+                userRepository = userRepository,
                 onAuthenticated = { user ->
                     currentUser = user
                     refreshTasks(user)
