@@ -104,10 +104,14 @@ fun DashBoard(
                     DialogCard(
                         task = editingTask,
                         onSubmitTask = { draft ->
-                            // Add new task
+                            onSubmitTask(draft)
+                            showTaskDialog = false
+                            editingTask = null
                         },
                         onUpdateTask = { id, draft ->
-                            // Update existing task
+                            onUpdateTask(id, draft)
+                            showTaskDialog = false
+                            editingTask = null
                         },
                         onDismiss = {
                             showTaskDialog = false
